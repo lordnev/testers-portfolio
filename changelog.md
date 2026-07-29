@@ -2,18 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-### Changed
-
-- **Playwright** - Fixed `.env` file path in `playwright.config.ts`. The config was looking for `.env` in the `Playwright/` subdirectory, but the file is located at the repository root. Changed `path.resolve(__dirname, '.env')` to `path.resolve(__dirname, '..', '.env')`.
+## [1.1.0] - 2026-07-30
 
 ### Added
 
 - **Playwright** - New `ConsoleLog` PageObject (`Playwright/PageObjects/ConsoleLog.ts`) with `logOrderDetails(details)` method, extracting the order details console output from the test into a reusable class. Includes `OrderDetails` interface.
 
+### Changed
+
+- **Playwright** - Fixed `.env` file path in `playwright.config.ts`. The config was looking for `.env` in the `Playwright/` subdirectory, but the file is located at the repository root. Changed `path.resolve(__dirname, '.env')` to `path.resolve(__dirname, '..', '.env')`.
+
 ### Refactored
 
 - **Playwright** - Updated `shop.spec.ts` to use the new `ConsoleLog` PageObject instead of inline `console.log`. The test now instantiates `ConsoleLog` in `beforeEach` and calls `consoleLog.logOrderDetails(details)`.
+
+## [1.0.0] - 2025-01-01
+
+### Added
+
+- Initial release of the testers portfolio project with Cypress and Playwright test suites.
