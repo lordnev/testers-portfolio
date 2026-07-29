@@ -97,3 +97,30 @@ Po uruchomieniu testów w trybie headless, raport HTML z wynikami jest generowan
 ```bash
 npx playwright show-report
 ```
+
+## Konfiguracja środowiska (.env)
+
+Playwright wykorzystuje plik `.env` znajdujący się w katalogu głównym repozytorium (`testers-portfolio/.env`). Plik ten przechowuje zmienne środowiskowe, takie jak:
+
+*   `BASE_URL` - adres URL aplikacji testowanej
+*   `WP_ADMIN_URL` - adres URL panelu administracyjnego WordPressa
+*   `SHOP_URL` - adres URL sklepu
+*   `WP_USERNAME` - nazwa użytkownika do logowania
+*   `WP_PASSWORD` - hasło do logowania
+
+Plik jest automatycznie ładowany w `playwright.config.ts` poprzez `dotenv.config()`.
+
+## Struktura PageObjects
+
+Testy Playwright korzystają z wzorca Page Object Model. Klasy PageObjects znajdują się w katalogu `Playwright/PageObjects/` i obejmują:
+
+*   `HomePage` - strona główna
+*   `LoginPage` - strona logowania
+*   `ShopPage` - strona sklepu
+*   `ProductPage` - strona produktu
+*   `CheckoutPage` - strona zamówień
+*   `ConsoleLog` - logowanie szczegółów zamówień do konsoli
+
+## Zmiany
+
+Zobacz [CHANGELOG.md](CHANGELOG.md) dla pełnej listy zmian.
