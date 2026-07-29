@@ -11,6 +11,10 @@ export class HomePage {
     await this.page.goto(process.env.BASE_URL as string);
   }
 
+  async goToShop() {
+      await this.page.getByRole('link', { name: 'Sklep', exact: true }).click();
+  }
+
   async checkRegulaminExists() {
     // Weryfikacja czy istnieje link z tekstem "Regulamin"
     const regulaminLink = this.page.getByRole('link', { name: /Regulamin/i });

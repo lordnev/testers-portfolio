@@ -14,12 +14,17 @@ export class ShopPage {
   async checkProductsVisible() {
     // W WooCommerce (i większości sklepów) produkty zazwyczaj mają klasę '.product' lub listę ul.products
     const products = this.page.locator('.product, .type-product');
-    
+
     // Oczekujemy, że przynajmniej jeden produkt będzie widoczny na stronie
     await expect(products.first()).toBeVisible();
-    
+
     // Sprawdzenie, czy załadowano więcej niż 0 produktów
     const count = await products.count();
     expect(count).toBeGreaterThan(0);
   }
+
+  async selectProduct(productName: string) {
+    await this.page.getByRole('link', { name: new RegExp(productName, 'i') }).first().click();
+  }
+
 }

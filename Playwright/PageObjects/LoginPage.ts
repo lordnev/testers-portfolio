@@ -25,9 +25,12 @@ export class LoginPage {
   async login(username?: string, password?: string) {
     const user = username ?? process.env.WP_USERNAME;
     const pass = password ?? process.env.WP_PASSWORD;
-    
+
     await this.page.locator('#user_login').fill(user as string);
     await this.page.locator('#user_pass').fill(pass as string);
     await this.page.locator('#wp-submit').click();
+
+    // Wait for the dashboard to load to confirm login success
+    await this.page.waitForURL(/moje-konto/);
   }
 }
