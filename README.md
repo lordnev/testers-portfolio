@@ -15,17 +15,44 @@ Repozytorium jest podzielone na katalogi odpowiadające różnym frameworkom tes
 
 ```
 testers-portfolio/
+├── .env                        # Zmienne środowiskowe (BASE_URL, WP_ADMIN_URL, SHOP_URL, WP_USERNAME, WP_PASSWORD)
+├── .gitignore                  # Git ignore
+├── CHANGELOG.md                # Changelog zmian
+├── README.md                   # Dokumentacja projektu
 ├── Cypress/                    # Testy E2E w Cypress (JavaScript)
-│   ├── cypress/
-│   │   ├── e2e/                # Testy end-to-end
-│   │   ├── fixtures/           # Dane testowe
-│   │   └── support/            # Komendy i konfiguracja wsparcia
 │   ├── cypress.config.js       # Konfiguracja Cypress
-│   └── package.json
+│   ├── package.json            # Zależności Cypress
+│   ├── package-lock.json       # Lock file zależności
+│   └── cypress/
+│       ├── e2e/                # Testy end-to-end
+│       │   ├── shop.cy.ts      # Testy sklepu (TypeScript)
+│       │   └── test.cy.js      # Przykładowy test (JavaScript)
+│       ├── fixtures/           # Dane testowe
+│       │   └── example.json
+│       ├── pages/              # Page Objects
+│       │   ├── HomePage.ts
+│       │   ├── LoginPage.ts
+│       │   └── ShopPage.ts
+│       └── support/            # Komendy i konfiguracja wsparcia
+│           ├── commands.js
+│           └── e2e.js
 └── Playwright/                 # Testy E2E w Playwright (TypeScript)
-    ├── tests/                  # Testy end-to-end
+    ├── .gitignore              # Git ignore (Playwright)
+    ├── package.json            # Zależności Playwright
+    ├── package-lock.json       # Lock file zależności
     ├── playwright.config.ts    # Konfiguracja Playwright
-    └── package.json
+    ├── PageObjects/            # Page Objects
+    │   ├── CheckoutPage.ts
+    │   ├── ConsoleLog.ts
+    │   ├── HomePage.ts
+    │   ├── LoginPage.ts
+    │   ├── ProductPage.ts
+    │   └── ShopPage.ts
+    ├── tests/                  # Testy end-to-end
+    │   └── website/
+    │       └── shop.spec.ts    # Testy sklepu
+    ├── playwright-report/      # Raport HTML (generowany)
+    └── test-results/           # Wyniki testów (generowane)
 ```
 
 Repozytorium jest podzielone na katalogi odpowiadające różnym frameworkom testowym:
