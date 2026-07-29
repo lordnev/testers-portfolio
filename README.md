@@ -150,4 +150,4 @@ Testy Playwright korzystają z wzorca Page Object Model. Klasy PageObjects znajd
 
 ## Zmiany
 
-Zobacz [CHANGELOG.md](CHANGELOG.md) dla pełnej listy zmian.
+Zobacz [changelog.md](CHANGELOG.md) dla pełnej listy zmian.
