@@ -4,6 +4,7 @@ import { LoginPage } from '../../PageObjects/LoginPage';
 import { ShopPage } from '../../PageObjects/ShopPage';
 import { ProductPage } from '../../PageObjects/ProductPage';
 import { CheckoutPage } from '../../PageObjects/CheckoutPage';
+import { ConsoleLog } from '../../PageObjects/ConsoleLog';
 
 test.describe('Shop Tests - Testers Portfolio', () => {
   let homePage: HomePage;
@@ -11,6 +12,7 @@ test.describe('Shop Tests - Testers Portfolio', () => {
   let shopPage: ShopPage;
   let productPage: ProductPage;
   let checkoutPage: CheckoutPage;
+  let consoleLog: ConsoleLog;
 
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
@@ -18,6 +20,7 @@ test.describe('Shop Tests - Testers Portfolio', () => {
     shopPage = new ShopPage(page);
     productPage = new ProductPage(page);
     checkoutPage = new CheckoutPage(page);
+    consoleLog = new ConsoleLog(page);
   });
 
   test('Verification of key subpages presence (Terms, Policy, Contact)', async () => {
@@ -54,11 +57,7 @@ test.describe('Shop Tests - Testers Portfolio', () => {
     await checkoutPage.confirmOrder();
     await checkoutPage.orderSummary(details.email);
 
-    console.log(`Test completed. Order details:
-Imię: ${details.firstName}
-Nazwisko: ${details.lastName}
-Email: ${details.email}
-Telefon: ${details.phone}`);
+    consoleLog.logOrderDetails(details);
 
   });
 });
