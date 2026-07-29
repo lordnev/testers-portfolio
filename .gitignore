@@ -1,2 +1,3 @@
 Cypress/node_modules
 Playwright/node_modules
+Playwright/.env
