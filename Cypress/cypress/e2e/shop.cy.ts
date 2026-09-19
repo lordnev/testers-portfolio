@@ -1,6 +1,6 @@
-import { HomePage } from '../pages/HomePage';
-import { LoginPage } from '../pages/LoginPage';
-import { ShopPage } from '../pages/ShopPage';
+import { HomePage } from '../pages/shop/HomePage';
+import { LoginPage } from '../pages/shop/LoginPage';
+import { ShopPage } from '../pages/shop/ShopPage';
 
 describe('Shop Tests - Tester Portfolio', () => {
 
