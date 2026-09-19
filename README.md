@@ -10,7 +10,7 @@ Witaj w moim portfolio! Ten projekt to zbiór projektów i przykładów testów 
 Repozytorium jest podzielone na katalogi odpowiadające różnym frameworkom testowym:
 
 *   **[Cypress](./Cypress/)** - projekt z testami napisanymi we frameworku Cypress (TypeScript). Znajdziesz tam standardową strukturę testów E2E w katalogu `cypress/e2e`, w tym kompleksowy zestaw 60 testów dla strony the-internet.herokuapp.com z wykorzystaniem wzorca Page Object Model.
-*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript/JavaScript), z przykładowymi testami w katalogu `tests/`.
+*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript), obejmujący testy E2E dla sklepu internetowego, implementację zaawansowanego logowania detali zamówień do konsoli (ConsoleLog) oraz pełną konfigurację środowiskową (.env).
 
 
 ```
@@ -58,7 +58,7 @@ testers-portfolio/
 Repozytorium jest podzielone na katalogi odpowiadające różnym frameworkom testowym:
 
 *   **[Cypress](./Cypress/)** - projekt z testami napisanymi we frameworku Cypress (TypeScript). Znajdziesz tam standardową strukturę testów E2E w katalogu `cypress/e2e`, w tym kompleksowy zestaw 60 testów dla strony the-internet.herokuapp.com z wykorzystaniem wzorca Page Object Model.
-*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript/JavaScript), z przykładowymi testami w katalogu `tests/`.
+*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript), obejmujący testy E2E dla sklepu internetowego, implementację zaawansowanego logowania detali zamówień do konsoli (ConsoleLog) oraz pełną konfigurację środowiskową (.env).
 
 
 ## Technologie
