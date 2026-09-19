@@ -3,171 +3,79 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18-green)](https://nodejs.org/)
 
-Witaj w moim portfolio! Ten projekt to zbiór projektów i przykładów testów automatycznych, stworzonych z użyciem popularnych narzędzi do testowania aplikacji webowych (end-to-end). 
+Witaj w moim portfolio! Ten projekt to zbiór profesjonalnych przykładów testów automatycznych E2E stworzonych z użyciem najpopularniejszych frameworków: **Cypress** oraz **Playwright**.
 
-## Struktura Repozytorium
+## 🚀 Przegląd Projektów
 
-Repozytorium jest podzielone na katalogi odpowiadające różnym frameworkom testowym:
+Repozytorium zawiera kompleksowe suite testowe dla trzech różnych środowisk, demonstrując szeroki wachlarz technik automatyzacji:
 
-*   **[Cypress](./Cypress/)** - projekt z testami napisanymi we frameworku Cypress (TypeScript). Znajdziesz tam standardową strukturę testów E2E w katalogu `cypress/e2e`, w tym:
-        - Kompleksowy zestaw 60 testów dla strony the-internet.herokuapp.com z wykorzystaniem wzorca Page Object Model.
-        - Testy E2E dla sklepu Swag Labs (logowanie parametrzyzowane oraz pełny flow zakupu) z implementacją wzorca Page Object Model.
-*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript), obejmujący zaawansowany zestaw testów dla sklepu internetowego (w tym Swag Labs) oraz kompleksową suite testową dla strony the-internet.herokuapp.com. Projekt implementuje zaawansowane techniki takie jak:
-        - Obsługa wielu okien, iFrame'ów i Shadow DOM.
-        - Mockowanie geolokalizacji i przechwytywanie błędów JavaScript.
-        - Walidacja statusów HTTP i testy wydajnościowe (Large DOM).
-        - Implementacja wzorca Page Object Model (POM) oraz zaawansowane logowanie detali zamówień do konsoli (ConsoleLog).
-        - Pełna konfiguracja środowiskowa (.env).
+### 1. DemoQA (`demoqa.com`)
+Zaawansowane testy interakcji z elementami UI.
+- **Zakres**: Text boxes, Checkboxes, Radio buttons, Select options, Alerts, Windows, Widgets (Date Picker), oraz zaawansowane interakcje (Drag & Drop, Resizable, Selectable).
+- **Implementacja**: Pełny wzorzec **Page Object Model (POM)** w obu frameworkach.
+- **Techniki**: Obsługa ukrytych elementów, walka z nakładkami reklamowymi (custom ad-blocker), oraz precyzyjne sterowanie myszą.
 
+### 2. The Internet (`the-internet.herokuapp.com`)
+Kompleksowy poligon testowy dla automatyzatora.
+- **Zakres**: Ponad 60 scenariuszy testowych.
+- **Techniki**: Shadow DOM, mockowanie geolokalizacji, przechwytywanie błędów JS, walidacja statusów HTTP i obsługa iFrame'ów.
+
+### 3. Swag Labs (SauceDemo)
+Testy przepływów biznesowych (Business Flows).
+- **Zakres**: Parametryzowane logowanie i pełny proces zakupowy (End-to-End Purchase Flow).
+- **Implementacja**: Struktura POM zapewniająca wysoką skalowalność.
+
+## 📂 Struktura Repozytorium
 
 ```
 testers-portfolio/
-├── .env                        # Zmienne środowiskowe (BASE_URL, WP_ADMIN_URL, SHOP_URL, WP_USERNAME, WP_PASSWORD)
-├── .gitignore                  # Git ignore
-├── CHANGELOG.md                # Changelog zmian
-├── README.md                   # Dokumentacja projektu
-├── Cypress/                    # Testy E2E w Cypress (TypeScript)
-│   ├── cypress.config.js       # Konfiguracja Cypress
-│   ├── package.json            # Zależności Cypress
-│   ├── package-lock.json       # Lock file zależności
+├── .env                        # Zmienne środowiskowe (URL, dane logowania)
+├── CHANGELOG.md                # Historia zmian projektu
+├── README.md                   # Dokumentacja główna
+├── Cypress/                    # Projekt w Cypress (TypeScript)
 │   └── cypress/
-│       ├── e2e/                # Testy end-to-end
-│       │   ├── shop.cy.ts      # Testy sklepu (TypeScript)
-│       │   ├── swag-labs.cy.ts # E2E Purchase Flow dla Swag Labs
-│       │   ├── swag-labs-login.cy.ts # Testy logowania Swag Labs
-│       │   └── the-internet.cy.ts # Kompleksowy zestaw 60 testów (TypeScript)
-│       ├── fixtures/           # Dane testowe
-│       │   └── example.json
-│       ├── pages/              # Page Objects
-│       │   ├── the-internet/    # Page Objects dla the-internet.herokuapp.com
-│       │   ├── Swag-Labs/        # Page Objects dla Swag Labs
-│       │   ├── HomePage.ts
-│       │   ├── LoginPage.ts
-│       │   └── ShopPage.ts
-│       └── support/            # Komendy i konfiguracja wsparcia
-│           ├── commands.js
-│           └── e2e.js
-└── Playwright/                 # Testy E2E w Playwright (TypeScript)
-    ├── .gitignore              # Git ignore (Playwright)
-    ├── package.json            # Zależności Playwright
-    ├── package-lock.json       # Lock file zależności
-    ├── playwright.config.ts    # Konfiguracja Playwright
-    ├── PageObjects/            # Page Objects
-    │   ├── CheckoutPage.ts
-    │   ├── ConsoleLog.ts
-    │   ├── HomePage.ts
-    │   ├── LoginPage.ts
-    │   ├── ProductPage.ts
-    │   └── ShopPage.ts
-    ├── tests/                  # Testy end-to-end
-    │   ├── the-internet/       # Testy dla the-internet.herokuapp.com
-    │   │   └── the-internet.spec.ts
-    │   └── website/
-    │       └── shop.spec.ts    # Testy sklepu
-    ├── playwright-report/      # Raport HTML (generowany)
-    └── test-results/           # Wyniki testów (generowane)
+│       ├── e2e/                # Scenariusze testowe
+│       │   ├── demoqa.cy.ts     # Testy DemoQA
+│       │   ├── swag-labs.cy.ts # E2E Purchase Flow
+│       │   └── the-internet.cy.ts # Suite 60 testów
+│       └── pages/              # Page Objects (POM)
+│           └── demoqa/          # POM dla DemoQA
+│           └── Swag-Labs/       # POM dla Swag Labs
+│           └── the-internet/    # POM dla The Internet
+└── Playwright/                 # Projekt w Playwright (TypeScript)
+    ├── playwright.config.ts    # Konfiguracja globalna
+    ├── PageObjects/            # Page Objects (POM)
+    │   └── demoqa/              # POM dla DemoQA
+    │   └── ShopPage.ts, LoginPage.ts, etc.
+    └── tests/                  # Scenariusze testowe
+        ├── demoqa/              # Testy DemoQA
+        └── the-internet/        # Testy The Internet
 ```
 
-Repozytorium jest podzielone na katalogi odpowiadające różnym frameworkom testowym:
+## 🛠 Technologie
 
-*   **[Cypress](./Cypress/)** - projekt z testami napisanymi we frameworku Cypress (TypeScript). Znajdziesz tam standardową strukturę testów E2E w katalogu `cypress/e2e`, w tym:
-        - Kompleksowy zestaw 60 testów dla strony the-internet.herokuapp.com z wykorzystaniem wzorca Page Object Model.
-        - Testy E2E dla sklepu Swag Labs (logowanie parametrzyzowane oraz pełny flow zakupu) z implementacją wzorca Page Object Model.
-*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript), obejmujący zaawansowany zestaw testów dla sklepu internetowego (w tym Swag Labs) oraz kompleksową suite testową dla strony the-internet.herokuapp.com. Projekt implementuje zaawansowane techniki takie jak:
-        - Obsługa wielu okien, iFrame'ów i Shadow DOM.
-        - Mockowanie geolokalizacji i przechwytywanie błędów JavaScript.
-        - Walidacja statusów HTTP i testy wydajnościowe (Large DOM).
-        - Implementacja wzorca Page Object Model (POM) oraz zaawansowane logowanie detali zamówień do konsoli (ConsoleLog).
-        - Pełna konfiguracja środowiskowa (.env).
+- **Cypress** - Framework E2E uruchamiany w przeglądarce.
+- **Playwright** - Nowoczesny framework wspierający wiele silników (Chromium, Firefox, WebKit).
+- **TypeScript** - Dla silnego typowania i lepszej jakości kodu.
+- **Node.js (>=18)** - Środowisko uruchomieniowe.
 
+## 🏃 Jak uruchomić testy?
 
-## Technologie
-
-W ramach tego portfolio wykorzystano:
-*   **Cypress** - framework do testów E2E uruchamiany bezpośrednio w przeglądarce.
-*   **Playwright** - nowoczesny framework od Microsoft pozwalający na testy E2E w środowiskach wielu przeglądarek (Chromium, Firefox, WebKit).
-*   **Node.js** - środowisko uruchomieniowe.
-*   **JavaScript / TypeScript** - języki programowania wykorzystane do pisania skryptów testowych.
-
-## Jak zacząć?
-
-Oba projekty (Cypress oraz Playwright) posiadają swoje własne zależności zdefiniowane w odpowiednich plikach `package.json`. Aby je uruchomić, przejdź do wybranego katalogu.
-
-### Uruchomienie testów Cypress
-
+### Cypress
 ```bash
 cd Cypress
 npm install
-npx cypress open   # Otwiera okno interfejsu (Cypress Launchpad)
-# lub
-npx cypress run    # Uruchamia testy w trybie headless w konsoli
+npx cypress open   # Tryb UI (Launchpad)
+npx cypress run    # Tryb headless (konsola)
 ```
 
-### Uruchomienie testów Playwright
-
+### Playwright
 ```bash
 cd Playwright
 npm install
-npx playwright test        # Uruchamia testy w trybie headless
-# lub
-npx playwright test --ui   # Uruchamia testy w wygodnym trybie UI
+npx playwright test        # Wszystkie testy (headless)
+npx playwright test --ui    # Tryb interaktywny UI
 ```
 
-
-## Wymagania wstępne
-
-*   **Node.js** w wersji **>= 18**
-*   **npm** (dołączony z Node.js)
-
-### Uruchomienie testów Cypress
-
-```bash
-cd Cypress
-npm install
-npx cypress open   # Otwiera okno interfejsu (Cypress Launchpad)
-# lub
-npx cypress run    # Uruchamia testy w trybie headless w konsoli
-```
-
-### Uruchomienie testów Playwright
-
-```bash
-cd Playwright
-npm install
-npx playwright test        # Uruchamia testy w trybie headless (wszystkie przeglądarki)
-# lub
-npx playwright test --ui   # Uruchamia testy w wygodnym trybie UI
-```
-
-Po uruchomieniu testów w trybie headless, raport HTML z wynikami jest generowany automatycznie w katalogu `playwright-report/`. Aby go wyświetlić:
-
-```bash
-npx playwright show-report
-```
-
-## Konfiguracja środowiska (.env)
-
-Playwright wykorzystuje plik `.env` znajdujący się w katalogu głównym repozytorium (`testers-portfolio/.env`). Plik ten przechowuje zmienne środowiskowe, takie jak:
-
-*   `BASE_URL` - adres URL aplikacji testowanej
-*   `WP_ADMIN_URL` - adres URL panelu administracyjnego WordPressa
-*   `SHOP_URL` - adres URL sklepu
-*   `WP_USERNAME` - nazwa użytkownika do logowania
-*   `WP_PASSWORD` - hasło do logowania
-
-Plik jest automatycznie ładowany w `playwright.config.ts` poprzez `dotenv.config()`.
-
-## Struktura PageObjects
-
-Testy Playwright korzystają z wzorca Page Object Model. Klasy PageObjects znajdują się w katalogu `Playwright/PageObjects/` i obejmują:
-
-*   `HomePage` - strona główna
-*   `LoginPage` - strona logowania
-*   `ShopPage` - strona sklepu
-*   `ProductPage` - strona produktu
-*   `CheckoutPage` - strona zamówień
-*   `ConsoleLog` - logowanie szczegółów zamówień do konsoli
-
-## Zmiany
-
-Zobacz [CHANGELOG.md](CHANGELOG.md) dla pełnej listy zmian.
+## 📜 Zmiany i Dokumentacja
+Pełna historia rozwoju projektu znajduje się w pliku [CHANGELOG.md](CHANGELOG.md).

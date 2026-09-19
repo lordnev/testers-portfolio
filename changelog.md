@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-09-19
+
+### Added
+
+- **Playwright** - Professional E2E test suite for `demoqa.com` featuring 10 advanced test cases covering Text boxes, Checkboxes, Radio buttons, Select options, Alerts, Windows, Widgets, and complex Interactions (Drag & Drop, Resizable, Selectable).
+- **Cypress** - Professional E2E test suite for `demoqa.com` mirroring the Playwright implementation with 10 test cases.
+- **POM** - Implemented full Page Object Model architecture for `demoqa.com` in both Playwright and Cypress, including `BasePage`, `TextBoxPage`, `AlertsWindowsPage`, `WidgetsPage`, `InteractionsPage`, and `PracticeFormPage`.
+- **Technical Improvements** - Integrated an ad-blocker in `BasePage` to prevent UI overlays from blocking element interactions.
+
 ## [1.2.1] - 2026-09-19
 
 ### Added
