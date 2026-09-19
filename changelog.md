@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Cypress** - Comprehensive E2E test suite for `the-internet.herokuapp.com` consisting of 60 professional test cases.
 - **Cypress** - Implementation of the Page Object Model (POM) pattern with multiple page classes to ensure maintainability and scalability.
-- **Cypress** - Coverage for diverse web interactions including:
+- **Playwright** - Comprehensive E2E test suite for `the-internet.herokuapp.com` implementing advanced browser features (Shadow DOM, Geolocation mocking, JS Error interception, HTTP status validation).
+- **Cypress & Playwright** - Coverage for diverse web interactions including:
     - Authentication (Login)
     - Dynamic Content & Loading
     - JavaScript Alerts & Frames

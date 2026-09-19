@@ -10,7 +10,12 @@ Witaj w moim portfolio! Ten projekt to zbiór projektów i przykładów testów 
 Repozytorium jest podzielone na katalogi odpowiadające różnym frameworkom testowym:
 
 *   **[Cypress](./Cypress/)** - projekt z testami napisanymi we frameworku Cypress (TypeScript). Znajdziesz tam standardową strukturę testów E2E w katalogu `cypress/e2e`, w tym kompleksowy zestaw 60 testów dla strony the-internet.herokuapp.com z wykorzystaniem wzorca Page Object Model.
-*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript), obejmujący testy E2E dla sklepu internetowego, implementację zaawansowanego logowania detali zamówień do konsoli (ConsoleLog) oraz pełną konfigurację środowiskową (.env).
+*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript), obejmujący zaawansowany zestaw testów dla sklepu internetowego oraz kompleksową suite testową dla strony the-internet.herokuapp.com. Projekt implementuje zaawansowane techniki takie jak:
+        - Obsługa wielu okien, iFrame'ów i Shadow DOM.
+        - Mockowanie geolokalizacji i przechwytywanie błędów JavaScript.
+        - Walidacja statusów HTTP i testy wydajnościowe (Large DOM).
+        - Implementacja wzorca Page Object Model (POM) oraz zaawansowane logowanie detali zamówień do konsoli (ConsoleLog).
+        - Pełna konfiguracja środowiskowa (.env).
 
 
 ```
@@ -19,17 +24,18 @@ testers-portfolio/
 ├── .gitignore                  # Git ignore
 ├── CHANGELOG.md                # Changelog zmian
 ├── README.md                   # Dokumentacja projektu
-├── Cypress/                    # Testy E2E w Cypress (JavaScript)
+├── Cypress/                    # Testy E2E w Cypress (TypeScript)
 │   ├── cypress.config.js       # Konfiguracja Cypress
 │   ├── package.json            # Zależności Cypress
 │   ├── package-lock.json       # Lock file zależności
 │   └── cypress/
 │       ├── e2e/                # Testy end-to-end
 │       │   ├── shop.cy.ts      # Testy sklepu (TypeScript)
-│       │   └── test.cy.js      # Przykładowy test (JavaScript)
+│       │   └── the-internet.cy.ts # Kompleksowy zestaw 60 testów (TypeScript)
 │       ├── fixtures/           # Dane testowe
 │       │   └── example.json
 │       ├── pages/              # Page Objects
+│       │   ├── the-internet/    # Page Objects dla the-internet.herokuapp.com
 │       │   ├── HomePage.ts
 │       │   ├── LoginPage.ts
 │       │   └── ShopPage.ts
@@ -49,6 +55,8 @@ testers-portfolio/
     │   ├── ProductPage.ts
     │   └── ShopPage.ts
     ├── tests/                  # Testy end-to-end
+    │   ├── the-internet/       # Testy dla the-internet.herokuapp.com
+    │   │   └── the-internet.spec.ts
     │   └── website/
     │       └── shop.spec.ts    # Testy sklepu
     ├── playwright-report/      # Raport HTML (generowany)
@@ -58,7 +66,12 @@ testers-portfolio/
 Repozytorium jest podzielone na katalogi odpowiadające różnym frameworkom testowym:
 
 *   **[Cypress](./Cypress/)** - projekt z testami napisanymi we frameworku Cypress (TypeScript). Znajdziesz tam standardową strukturę testów E2E w katalogu `cypress/e2e`, w tym kompleksowy zestaw 60 testów dla strony the-internet.herokuapp.com z wykorzystaniem wzorca Page Object Model.
-*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript), obejmujący testy E2E dla sklepu internetowego, implementację zaawansowanego logowania detali zamówień do konsoli (ConsoleLog) oraz pełną konfigurację środowiskową (.env).
+*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript), obejmujący zaawansowany zestaw testów dla sklepu internetowego oraz kompleksową suite testową dla strony the-internet.herokuapp.com. Projekt implementuje zaawansowane techniki takie jak:
+        - Obsługa wielu okien, iFrame'ów i Shadow DOM.
+        - Mockowanie geolokalizacji i przechwytywanie błędów JavaScript.
+        - Walidacja statusów HTTP i testy wydajnościowe (Large DOM).
+        - Implementacja wzorca Page Object Model (POM) oraz zaawansowane logowanie detali zamówień do konsoli (ConsoleLog).
+        - Pełna konfiguracja środowiskowa (.env).
 
 
 ## Technologie
