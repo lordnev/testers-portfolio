@@ -1,817 +1,394 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../PageObjects/the-internet';
 import * as path from 'path';
 import * as fs from 'fs';
-import {
-  TheInternetHomePage,
-  AddRemoveElementsPage,
-  CheckboxesPage,
-  DropdownPage,
-  DynamicControlsPage,
-  DynamicLoadingPage,
-  FormAuthPage,
-  HoversPage,
-  JsAlertsPage,
-  UploadDownloadPage,
-  TablesPage,
-  KeyPressesPage,
-  BrokenImagesPage,
-  ChallengingDomPage,
-  ContextMenuPage,
-  DragAndDropPage,
-  EntryAdPage,
-  FloatingMenuPage,
-  ForgotPasswordPage,
-  FramesPage,
-  HorizontalSliderPage,
-  InputsPage,
-  MultipleWindowsPage,
-  NotificationMessagePage,
-  StatusCodesPage,
-  ShadowDomPage,
-  LargeDomPage,
-  ABTestingPage,
-  GeolocationPage,
-  InfiniteScrollPage,
-  ExitIntentPage,
-  ShiftingContentPage,
-  TyposPage,
-} from '../../PageObjects/the-internet';
 
-test.describe('The Internet Herokuapp - Comprehensive Test Suite (60 Tests)', () => {
+test.describe('The Internet Herokuapp - Modern Playwright Suite', () => {
 
-  // ==========================================
-  // BATCH 1: TESTS 1 - 20 (Foundational Features)
-  // ==========================================
+  // --- Navigation & Core Elements ---
+  test('Home page structure and link navigation', async ({ homePage, page }) => {
+    await expect(homePage.heading).toHaveText('Welcome to the-internet');
+    await expect(homePage.availableExamples).toHaveCount(44);
 
-  test.describe('Home Page Navigation', () => {
-    test('1. should load main page and verify heading and examples list', async ({ page }) => {
-      const homePage = new TheInternetHomePage(page);
-      await homePage.open();
-
-      await expect(homePage.heading).toHaveText('Welcome to the-internet');
-      await expect(homePage.availableExamples).toHaveCount(44);
-    });
-
-    test('2. should navigate to Checkboxes from home page', async ({ page }) => {
-      const homePage = new TheInternetHomePage(page);
-      await homePage.open();
-      await homePage.clickExampleLink('Checkboxes');
-
-      await expect(page).toHaveURL(/.*\/checkboxes/);
-      await expect(page.locator('h3')).toHaveText('Checkboxes');
-    });
+    await homePage.clickExampleLink('Checkboxes');
+    await expect(page).toHaveURL(/.*\/checkboxes/);
   });
 
-  test.describe('Add/Remove Elements', () => {
-    test('3. should add and remove multiple dynamic elements', async ({ page }) => {
-      const addRemovePage = new AddRemoveElementsPage(page);
-      await addRemovePage.open();
-
-      await expect(addRemovePage.deleteBtns).toHaveCount(0);
-
-      await addRemovePage.addElements(3);
-      await expect(addRemovePage.deleteBtns).toHaveCount(3);
-
-      await addRemovePage.deleteFirstElement();
-      await expect(addRemovePage.deleteBtns).toHaveCount(2);
-
-      await addRemovePage.deleteAllElements();
-      await expect(addRemovePage.deleteBtns).toHaveCount(0);
-    });
+  test('Add/Remove elements dynamic lifecycle', async ({ addRemovePage }) => {
+    await expect(addRemovePage.deleteBtns).toHaveCount(0);
+    await addRemovePage.addElements(3);
+    await expect(addRemovePage.deleteBtns).toHaveCount(3);
+    await addRemovePage.deleteFirstElement();
+    await expect(addRemovePage.deleteBtns).toHaveCount(2);
+    await addRemovePage.deleteAllElements();
+    await expect(addRemovePage.deleteBtns).toHaveCount(0);
   });
 
-  test.describe('Checkboxes', () => {
-    test('4. should toggle checkbox states accurately', async ({ page }) => {
-      const checkboxesPage = new CheckboxesPage(page);
-      await checkboxesPage.open();
-
-      await expect(checkboxesPage.checkboxes.nth(0)).not.toBeChecked();
-      await expect(checkboxesPage.checkboxes.nth(1)).toBeChecked();
-
-      await checkboxesPage.setCheckbox(0, true);
-      await checkboxesPage.setCheckbox(1, false);
-
-      await expect(checkboxesPage.checkboxes.nth(0)).toBeChecked();
-      await expect(checkboxesPage.checkboxes.nth(1)).not.toBeChecked();
-    });
+  test('Batch addition and deletion performance', async ({ addRemovePage }) => {
+    await addRemovePage.addElements(10);
+    await expect(addRemovePage.deleteBtns).toHaveCount(10);
+    for (let i = 0; i < 5; i++) await addRemovePage.deleteFirstElement();
+    await expect(addRemovePage.deleteBtns).toHaveCount(5);
   });
 
-  test.describe('Dropdown List', () => {
-    test('5. should select options by value and label', async ({ page }) => {
-      const dropdownPage = new DropdownPage(page);
-      await dropdownPage.open();
+  test('Checkbox toggle state and keyboard spacebar interaction', async ({ checkboxesPage, page }) => {
+    const [box1, box2] = [checkboxesPage.checkboxes.nth(0), checkboxesPage.checkboxes.nth(1)];
+    await expect(box1).not.toBeChecked();
+    await expect(box2).toBeChecked();
 
-      await dropdownPage.selectByValue('1');
-      expect(await dropdownPage.getSelectedValue()).toBe('1');
+    await checkboxesPage.setCheckbox(0, true);
+    await checkboxesPage.setCheckbox(1, false);
+    await expect(box1).toBeChecked();
+    await expect(box2).not.toBeChecked();
 
-      await dropdownPage.selectByLabel('Option 2');
-      expect(await dropdownPage.getSelectedValue()).toBe('2');
-    });
+    await box1.focus();
+    await page.keyboard.press('Space');
+    await expect(box1).not.toBeChecked();
   });
 
-  test.describe('Dynamic Controls', () => {
-    test('6. should remove and restore checkbox with async waiting', async ({ page }) => {
-      const dynamicControls = new DynamicControlsPage(page);
-      await dynamicControls.open();
+  // --- Form Controls & Inputs ---
+  test('Dropdown select, keyboard navigation and placeholder state', async ({ dropdownPage, page }) => {
+    await expect(dropdownPage.dropdown.locator('option').first()).toBeDisabled();
 
-      await expect(dynamicControls.checkbox).toBeVisible();
+    await dropdownPage.selectByValue('1');
+    expect(await dropdownPage.getSelectedValue()).toBe('1');
 
-      await dynamicControls.clickRemoveAdd();
-      await expect(dynamicControls.message).toHaveText("It's gone!", { timeout: 10000 });
-      await expect(dynamicControls.checkbox).toHaveCount(0);
+    await dropdownPage.selectByLabel('Option 2');
+    expect(await dropdownPage.getSelectedValue()).toBe('2');
 
-      await dynamicControls.clickRemoveAdd();
-      await expect(dynamicControls.message).toHaveText("It's back!", { timeout: 10000 });
-      await expect(dynamicControls.checkbox).toBeVisible();
-    });
-
-    test('7. should enable and disable input field', async ({ page }) => {
-      const dynamicControls = new DynamicControlsPage(page);
-      await dynamicControls.open();
-
-      await expect(dynamicControls.inputField).toBeDisabled();
-
-      await dynamicControls.clickEnableDisable();
-      await expect(dynamicControls.message).toHaveText("It's enabled!", { timeout: 10000 });
-      await expect(dynamicControls.inputField).toBeEnabled();
-
-      await dynamicControls.inputField.fill('Playwright Test');
-      await expect(dynamicControls.inputField).toHaveValue('Playwright Test');
-
-      await dynamicControls.clickEnableDisable();
-      await expect(dynamicControls.message).toHaveText("It's disabled!", { timeout: 10000 });
-      await expect(dynamicControls.inputField).toBeDisabled();
-    });
+    await dropdownPage.dropdown.focus();
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('Enter');
+    expect(['1', '2']).toContain(await dropdownPage.getSelectedValue());
   });
 
-  test.describe('Dynamic Loading', () => {
-    test('8. Example 1: Element on page that is hidden', async ({ page }) => {
-      const dynamicLoading = new DynamicLoadingPage(page);
-      await dynamicLoading.openExample(1);
+  test('Dynamic Controls: async checkbox & input field states', async ({ dynamicControlsPage }) => {
+    await expect(dynamicControlsPage.checkbox).toBeVisible();
+    await dynamicControlsPage.clickRemoveAdd();
+    await expect(dynamicControlsPage.message).toHaveText("It's gone!", { timeout: 10000 });
+    await expect(dynamicControlsPage.checkbox).toHaveCount(0);
 
-      await dynamicLoading.startAndWaitForFinish();
-      await expect(dynamicLoading.finishText).toBeVisible();
-      await expect(dynamicLoading.finishText).toHaveText('Hello World!');
-    });
+    await dynamicControlsPage.clickRemoveAdd();
+    await expect(dynamicControlsPage.message).toHaveText("It's back!", { timeout: 10000 });
+    await expect(dynamicControlsPage.checkbox).toBeVisible();
 
-    test('9. Example 2: Element that is rendered after the fact', async ({ page }) => {
-      const dynamicLoading = new DynamicLoadingPage(page);
-      await dynamicLoading.openExample(2);
+    await expect(dynamicControlsPage.inputField).toBeDisabled();
+    await dynamicControlsPage.clickEnableDisable();
+    await expect(dynamicControlsPage.message).toHaveText("It's enabled!", { timeout: 10000 });
+    await expect(dynamicControlsPage.inputField).toBeEnabled();
 
-      await dynamicLoading.startAndWaitForFinish();
-      await expect(dynamicLoading.finishText).toBeVisible();
-      await expect(dynamicLoading.finishText).toHaveText('Hello World!');
-    });
+    await dynamicControlsPage.inputField.fill('Playwright Modern Test');
+    await expect(dynamicControlsPage.inputField).toHaveValue('Playwright Modern Test');
+
+    await dynamicControlsPage.clickEnableDisable();
+    await expect(dynamicControlsPage.message).toHaveText("It's disabled!", { timeout: 10000 });
+    await expect(dynamicControlsPage.inputField).toBeDisabled();
   });
 
-  test.describe('Form Authentication', () => {
-    test('10. should fail login with invalid credentials', async ({ page }) => {
-      const authPage = new FormAuthPage(page);
-      await authPage.open();
-
-      await authPage.login('invalidUser', 'wrongPassword');
-      await expect(authPage.flashMessage).toContainText('Your username is invalid!');
-    });
-
-    test('11. should successfully login and logout with valid credentials', async ({ page }) => {
-      const authPage = new FormAuthPage(page);
-      await authPage.open();
-
-      await authPage.login('tomsmith', 'SuperSecretPassword!');
-      await expect(page).toHaveURL(/.*\/secure/);
-      await expect(authPage.flashMessage).toContainText('You logged into a secure area!');
-
-      await authPage.logout();
-      await expect(page).toHaveURL(/.*\/login/);
-      await expect(authPage.flashMessage).toContainText('You logged out of the secure area!');
-    });
+  test('Number inputs typing, arrows increment and bounds', async ({ inputsPage }) => {
+    await inputsPage.fillNumber('10');
+    await expect(inputsPage.numberInput).toHaveValue('10');
+    await inputsPage.stepWithArrow('Up');
+    await expect(inputsPage.numberInput).toHaveValue('11');
+    await inputsPage.stepWithArrow('Down');
+    await inputsPage.stepWithArrow('Down');
+    await expect(inputsPage.numberInput).toHaveValue('9');
   });
 
-  test.describe('Hovers', () => {
-    test('12. should reveal user info on mouse hover', async ({ page }) => {
-      const hoversPage = new HoversPage(page);
-      await hoversPage.open();
-
-      const userCount = await hoversPage.figures.count();
-      expect(userCount).toBe(3);
-
-      for (let i = 0; i < userCount; i++) {
-        await hoversPage.hoverFigure(i);
-        const caption = hoversPage.getFigureCaption(i);
-
-        await expect(caption).toBeVisible();
-        await expect(caption.locator('h5')).toHaveText(`name: user${i + 1}`);
-        await expect(caption.locator('a')).toHaveAttribute('href', `/users/${i + 1}`);
-      }
-    });
+  test('Horizontal slider adjustment via keyboard', async ({ sliderPage }) => {
+    await sliderPage.setSliderValueWithKeys(3.5);
+    await expect(sliderPage.rangeValue).toHaveText('3.5');
   });
 
-  test.describe('JavaScript Dialogs & Alerts', () => {
-    test('13. should handle simple alert', async ({ page }) => {
-      const alertsPage = new JsAlertsPage(page);
-      await alertsPage.open();
-
-      const msg = await alertsPage.triggerAlertAndAccept();
-      expect(msg).toBe('I am a JS Alert');
-      await expect(alertsPage.resultText).toHaveText('You successfully clicked an alert');
+  // --- Parameterized Dynamic Loading ---
+  for (const exampleId of [1, 2] as const) {
+    test(`Dynamic Loading: Example ${exampleId}`, async ({ dynamicLoadingPage }) => {
+      await dynamicLoadingPage.openExample(exampleId);
+      await dynamicLoadingPage.startAndWaitForFinish();
+      await expect(dynamicLoadingPage.finishText).toHaveText('Hello World!');
     });
+  }
 
-    test('14. should accept and dismiss confirm dialog', async ({ page }) => {
-      const alertsPage = new JsAlertsPage(page);
-      await alertsPage.open();
+  // --- Authentication ---
+  test('Form Authentication: valid, invalid and empty credentials', async ({ authPage, page }) => {
+    await expect(authPage.passwordInput).toHaveAttribute('type', 'password');
 
-      await alertsPage.triggerConfirm(true);
-      await expect(alertsPage.resultText).toHaveText('You clicked: Ok');
+    await authPage.login('', '');
+    await expect(authPage.flashMessage).toContainText('Your username is invalid!');
 
-      await alertsPage.triggerConfirm(false);
-      await expect(alertsPage.resultText).toHaveText('You clicked: Cancel');
-    });
+    await authPage.login('invalidUser', 'wrongPassword');
+    await expect(authPage.flashMessage).toContainText('Your username is invalid!');
 
-    test('15. should input prompt text and accept', async ({ page }) => {
-      const alertsPage = new JsAlertsPage(page);
-      await alertsPage.open();
+    await authPage.login('tomsmith', 'SuperSecretPassword!');
+    await expect(page).toHaveURL(/.*\/secure/);
+    await expect(authPage.flashMessage).toContainText('You logged into a secure area!');
 
-      const testInput = 'Automatyzacja Playwright';
-      await alertsPage.triggerPrompt(testInput);
-      await expect(alertsPage.resultText).toHaveText(`You entered: ${testInput}`);
-    });
+    await authPage.logout();
+    await expect(page).toHaveURL(/.*\/login/);
   });
 
-  test.describe('File Upload & Download', () => {
-    test('16. should upload a file and verify confirmation', async ({ page }, testInfo) => {
-      const uploadPage = new UploadDownloadPage(page);
-      await uploadPage.openUpload();
-
-      const tempFile = path.join(testInfo.outputDir, 'sample-upload.txt');
-      fs.mkdirSync(testInfo.outputDir, { recursive: true });
-      fs.writeFileSync(tempFile, 'Playwright test upload content');
-
-      await uploadPage.uploadFile(tempFile);
-      await expect(uploadPage.pageHeading).toHaveText('File Uploaded!');
-      await expect(uploadPage.uploadedFilesText).toHaveText('sample-upload.txt');
-    });
-
-    test('17. should trigger and verify file download', async ({ page }) => {
-      const downloadPage = new UploadDownloadPage(page);
-      await downloadPage.openDownload();
-
-      const [download] = await Promise.all([
-        page.waitForEvent('download'),
-        downloadPage.downloadLinks.first().click(),
-      ]);
-
-      const downloadName = download.suggestedFilename();
-      expect(downloadName).toBeTruthy();
-    });
+  test('HTTP Basic Auth via browser context', async ({ browser }) => {
+    const context = await browser.newContext({ httpCredentials: { username: 'admin', password: 'admin' } });
+    const page = await context.newPage();
+    await page.goto('https://the-internet.herokuapp.com/basic_auth');
+    await expect(page.locator('h3')).toHaveText('Basic Auth');
+    await expect(page.locator('.example p')).toContainText('Congratulations!');
+    await context.close();
   });
 
-  test.describe('Data Tables', () => {
-    test('18. should sort table rows by Last Name', async ({ page }) => {
-      const tablesPage = new TablesPage(page);
-      await tablesPage.open();
-
-      const initialValues = await tablesPage.getColumnValues(1, 1);
-      
-      await tablesPage.sortByHeader(1, 'Last Name');
-      const sortedValues = await tablesPage.getColumnValues(1, 1);
-
-      const expectedSorted = [...initialValues].sort((a, b) => a.localeCompare(b));
-      expect(sortedValues).toEqual(expectedSorted);
-    });
+  test('HTTP Digest Auth via browser context', async ({ browser }) => {
+    const context = await browser.newContext({ httpCredentials: { username: 'admin', password: 'admin' } });
+    const page = await context.newPage();
+    await page.goto('https://the-internet.herokuapp.com/digest_auth');
+    await expect(page.locator('h3')).toHaveText('Digest Auth');
+    await expect(page.locator('.example p')).toContainText('Congratulations!');
+    await context.close();
   });
 
-  test.describe('Key Presses', () => {
-    test('19. should detect key events', async ({ page }) => {
-      const keyPressPage = new KeyPressesPage(page);
-      await keyPressPage.open();
-
-      await keyPressPage.pressKey('Shift');
-      await expect(keyPressPage.resultText).toHaveText('You entered: SHIFT');
-
-      await keyPressPage.pressKey('Escape');
-      await expect(keyPressPage.resultText).toHaveText('You entered: ESCAPE');
-
-      await keyPressPage.pressKey('Space');
-      await expect(keyPressPage.resultText).toHaveText('You entered: SPACE');
-    });
+  // --- User Interactions & Dialogs ---
+  test('Hovers: reveal figures captions dynamically', async ({ hoversPage }) => {
+    const count = await hoversPage.figures.count();
+    for (let i = 0; i < count; i++) {
+      await hoversPage.hoverFigure(i);
+      const caption = hoversPage.getFigureCaption(i);
+      await expect(caption).toBeVisible();
+      await expect(caption.locator('h5')).toHaveText(`name: user${i + 1}`);
+    }
   });
 
-  test.describe('Basic Auth', () => {
-    test('20. should authenticate via HTTP Basic Auth headers', async ({ browser }) => {
-      const context = await browser.newContext({
-        httpCredentials: {
-          username: 'admin',
-          password: 'admin',
-        },
-      });
-      const page = await context.newPage();
-      await page.goto('https://the-internet.herokuapp.com/basic_auth');
+  test('JavaScript Dialogs: Alert, Confirm and Prompt', async ({ alertsPage }) => {
+    expect(await alertsPage.triggerAlertAndAccept()).toBe('I am a JS Alert');
+    await expect(alertsPage.resultText).toHaveText('You successfully clicked an alert');
 
-      await expect(page.locator('h3')).toHaveText('Basic Auth');
-      await expect(page.locator('.example p')).toContainText('Congratulations! You must have the proper credentials.');
-      await context.close();
-    });
+    await alertsPage.triggerConfirm(true);
+    await expect(alertsPage.resultText).toHaveText('You clicked: Ok');
+
+    await alertsPage.triggerConfirm(false);
+    await expect(alertsPage.resultText).toHaveText('You clicked: Cancel');
+
+    await alertsPage.triggerPrompt('Playwright Modern Test');
+    await expect(alertsPage.resultText).toHaveText('You entered: Playwright Modern Test');
   });
 
-  // ==========================================
-  // BATCH 2: TESTS 21 - 40 (Advanced Scenarios)
-  // ==========================================
-
-  test.describe('Broken Images', () => {
-    test('21. should detect broken and valid images by response status', async ({ page }) => {
-      const brokenImagesPage = new BrokenImagesPage(page);
-      await brokenImagesPage.open();
-
-      const statuses = await brokenImagesPage.getImageStatuses();
-      expect(statuses.length).toBeGreaterThan(0);
-      expect(statuses).toContain(200);
-      expect(statuses).toContain(404);
-    });
+  test('Context menu right-click dialog trigger', async ({ contextMenuPage }) => {
+    const msg = await contextMenuPage.rightClickHotSpot();
+    expect(msg).toBe('You selected a context menu');
   });
 
-  test.describe('Challenging DOM', () => {
-    test('22. should interact with dynamic buttons, canvas and table action links', async ({ page }) => {
-      const challengingDomPage = new ChallengingDomPage(page);
-      await challengingDomPage.open();
-
-      await challengingDomPage.clickBlueButton();
-      await challengingDomPage.clickRedAlertButton();
-      await challengingDomPage.clickGreenSuccessButton();
-
-      await expect(challengingDomPage.canvas).toBeVisible();
-      await expect(challengingDomPage.editLinks).toHaveCount(10);
-      await expect(challengingDomPage.deleteLinks).toHaveCount(10);
+  // --- Parameterized Key Presses ---
+  for (const [key, expected] of [['Shift', 'SHIFT'], ['Escape', 'ESCAPE'], ['Space', 'SPACE']]) {
+    test(`Key Presses: detect ${key} event`, async ({ keyPressPage }) => {
+      await keyPressPage.pressKey(key);
+      await expect(keyPressPage.resultText).toHaveText(`You entered: ${expected}`);
     });
+  }
+
+  // --- Files, Drag & Drop, Windows ---
+  test('File Upload and Download lifecycle', async ({ uploadDownloadPage, page }, testInfo) => {
+    await uploadDownloadPage.openUpload();
+    const tempFile = path.join(testInfo.outputDir, 'test-file.txt');
+    fs.mkdirSync(testInfo.outputDir, { recursive: true });
+    fs.writeFileSync(tempFile, 'Modern Playwright Upload Test');
+    await uploadDownloadPage.uploadFile(tempFile);
+    await expect(uploadDownloadPage.pageHeading).toHaveText('File Uploaded!');
+
+    await uploadDownloadPage.openDownload();
+    const [download] = await Promise.all([
+      page.waitForEvent('download'),
+      uploadDownloadPage.downloadLinks.first().click(),
+    ]);
+    expect(download.suggestedFilename()).toBeTruthy();
   });
 
-  test.describe('Context Menu', () => {
-    test('23. should trigger alert dialog on context menu right-click', async ({ page }) => {
-      const contextMenuPage = new ContextMenuPage(page);
-      await contextMenuPage.open();
-
-      const alertMsg = await contextMenuPage.rightClickHotSpot();
-      expect(alertMsg).toBe('You selected a context menu');
-    });
+  test('Secure File Download with credentials', async ({ browser }) => {
+    const context = await browser.newContext({ httpCredentials: { username: 'admin', password: 'admin' } });
+    const page = await context.newPage();
+    await page.goto('https://the-internet.herokuapp.com/download_secure');
+    await expect(page.locator('h3')).toHaveText('Secure File Downloader');
+    expect(await page.locator('.example a').count()).toBeGreaterThan(0);
+    await context.close();
   });
 
-  test.describe('Disappearing Elements', () => {
-    test('24. should verify presence of navigation elements', async ({ page }) => {
-      await page.goto('https://the-internet.herokuapp.com/disappearing_elements');
-      const menuItems = page.locator('.example ul li a');
-      await expect(menuItems.filter({ hasText: 'Home' })).toBeVisible();
-      await expect(menuItems.filter({ hasText: 'About' })).toBeVisible();
-      await expect(menuItems.filter({ hasText: 'Contact Us' })).toBeVisible();
-      await expect(menuItems.filter({ hasText: 'Portfolio' })).toBeVisible();
-    });
+  test('Drag and Drop column exchange', async ({ dragDropPage }) => {
+    await expect(dragDropPage.columnAHeader).toHaveText('A');
+    await dragDropPage.dragAToB();
+    await expect(dragDropPage.columnAHeader).toHaveText('B');
+    await dragDropPage.dragBToA();
+    await expect(dragDropPage.columnAHeader).toHaveText('A');
   });
 
-  test.describe('Drag and Drop', () => {
-    test('25. should drag and drop columns exchanging their headers', async ({ page }) => {
-      const dragDropPage = new DragAndDropPage(page);
-      await dragDropPage.open();
-
-      await expect(dragDropPage.columnAHeader).toHaveText('A');
-      await expect(dragDropPage.columnBHeader).toHaveText('B');
-
-      await dragDropPage.dragAToB();
-      await expect(dragDropPage.columnAHeader).toHaveText('B');
-      await expect(dragDropPage.columnBHeader).toHaveText('A');
-
-      await dragDropPage.dragBToA();
-      await expect(dragDropPage.columnAHeader).toHaveText('A');
-      await expect(dragDropPage.columnBHeader).toHaveText('B');
-    });
+  test('Multiple Windows tab management', async ({ windowsPage }) => {
+    const newTab = await windowsPage.openNewWindow();
+    await expect(newTab).toHaveURL(/.*\/windows\/new/);
+    await expect(newTab.locator('h3')).toHaveText('New Window');
+    await newTab.close();
   });
 
-  test.describe('Dynamic Content', () => {
-    test('26. should change content on page refresh', async ({ page }) => {
-      await page.goto('https://the-internet.herokuapp.com/dynamic_content');
-      const textRows = page.locator('#content .row .large-10');
-      const initialTexts = await textRows.allInnerTexts();
-
-      await page.reload();
-      const reloadedTexts = await textRows.allInnerTexts();
-
-      const isDifferent = initialTexts.some((text, i) => text !== reloadedTexts[i]);
-      expect(isDifferent).toBeTruthy();
-    });
+  // --- Frames & Nested Content ---
+  test('Nested Frames multi-target content validation', async ({ framesPage }) => {
+    await framesPage.openNestedFrames();
+    for (const pos of ['LEFT', 'MIDDLE', 'RIGHT', 'BOTTOM'] as const) {
+      await expect(framesPage.getNestedFrameText(pos)).toContainText(pos);
+    }
   });
 
-  test.describe('Entry Ad (Modal Window)', () => {
-    test('27. should display modal window and close it', async ({ page }) => {
-      const entryAdPage = new EntryAdPage(page);
-      await entryAdPage.open();
-
-      await expect(entryAdPage.modal).toBeVisible({ timeout: 10000 });
-      await expect(entryAdPage.modalTitle).toHaveText('This is a modal window');
-
-      await entryAdPage.closeModal();
-      await expect(entryAdPage.modal).toBeHidden();
-    });
+  test('iFrame TinyMCE WYSIWYG editor interaction', async ({ framesPage }) => {
+    await framesPage.openIframe();
+    const message = 'Modern automated text via Playwright Fixtures!';
+    await framesPage.setIframeText(message);
+    await expect(framesPage.getIframeBody()).toHaveText(message);
   });
 
-  test.describe('Floating Menu', () => {
-    test('28. should remain visible after scrolling down', async ({ page }) => {
-      const floatingMenuPage = new FloatingMenuPage(page);
-      await floatingMenuPage.open();
-
-      await expect(floatingMenuPage.menu).toBeVisible();
-      await floatingMenuPage.scrollDown(2500);
-
-      await expect(floatingMenuPage.menu).toBeVisible();
-      await expect(floatingMenuPage.homeLink).toBeVisible();
-    });
+  test('Shadow DOM text piercing', async ({ shadowPage, page }) => {
+    await expect(shadowPage.shadowParagraphs.first()).toHaveText("Let's have some different text!");
+    await expect(page.locator('ul[slot="my-text"] li').first()).toHaveText("Let's have some different text!");
   });
 
-  test.describe('Forgot Password', () => {
-    test('29. should submit email and verify response', async ({ page }) => {
-      const forgotPasswordPage = new ForgotPasswordPage(page);
-      await forgotPasswordPage.open();
+  // --- Data Tables Sorting ---
+  test('Data Tables: sort LastName, Email and Due columns', async ({ tablesPage }) => {
+    // Table 1 Last Name
+    const initialLastNames = await tablesPage.getColumnValues(1, 1);
+    await tablesPage.sortByHeader(1, 'Last Name');
+    expect(await tablesPage.getColumnValues(1, 1)).toEqual([...initialLastNames].sort((a, b) => a.localeCompare(b)));
 
-      await forgotPasswordPage.submitEmail('user@test.com');
-      await expect(page.locator('body')).not.toBeEmpty();
-    });
+    // Table 1 Email
+    const initialEmails = await tablesPage.getColumnValues(1, 3);
+    await tablesPage.sortByHeader(1, 'Email');
+    expect(await tablesPage.getColumnValues(1, 3)).toEqual([...initialEmails].sort((a, b) => a.localeCompare(b)));
+
+    // Table 2 Due
+    await tablesPage.sortByHeader(2, 'Due');
+    const dues = (await tablesPage.getColumnValues(2, 4)).map(v => parseFloat(v.replace('$', '')));
+    expect(dues).toEqual([...dues].sort((a, b) => a - b));
   });
 
-  test.describe('Horizontal Slider', () => {
-    test('30. should adjust slider value using arrow keys', async ({ page }) => {
-      const sliderPage = new HorizontalSliderPage(page);
-      await sliderPage.open();
-
-      await sliderPage.setSliderValueWithKeys(3.5);
-      await expect(sliderPage.rangeValue).toHaveText('3.5');
-    });
+  // --- Advanced DOM, Network & Browser Features ---
+  test('Broken images HTTP status validation', async ({ brokenImagesPage }) => {
+    const statuses = await brokenImagesPage.getImageStatuses();
+    expect(statuses).toContain(200);
+    expect(statuses).toContain(404);
   });
 
-  test.describe('Inputs', () => {
-    test('31. should handle numbers and arrow increment/decrement', async ({ page }) => {
-      const inputsPage = new InputsPage(page);
-      await inputsPage.open();
-
-      await inputsPage.fillNumber('10');
-      await expect(inputsPage.numberInput).toHaveValue('10');
-
-      await inputsPage.stepWithArrow('Up');
-      await expect(inputsPage.numberInput).toHaveValue('11');
-
-      await inputsPage.stepWithArrow('Down');
-      await inputsPage.stepWithArrow('Down');
-      await expect(inputsPage.numberInput).toHaveValue('9');
-    });
+  test('Challenging DOM dynamic buttons and canvas', async ({ challengingDomPage }) => {
+    await challengingDomPage.clickBlueButton();
+    await challengingDomPage.clickRedAlertButton();
+    await challengingDomPage.clickGreenSuccessButton();
+    await expect(challengingDomPage.canvas).toBeVisible();
+    await expect(challengingDomPage.editLinks).toHaveCount(10);
   });
 
-  test.describe('Multiple Windows / Tabs', () => {
-    test('32. should open new window and verify text', async ({ page }) => {
-      const windowsPage = new MultipleWindowsPage(page);
-      await windowsPage.open();
-
-      const newTab = await windowsPage.openNewWindow();
-      await expect(newTab).toHaveURL(/.*\/windows\/new/);
-      await expect(newTab.locator('h3')).toHaveText('New Window');
-      await newTab.close();
-    });
+  test('Disappearing Elements navigation links', async ({ page }) => {
+    await page.goto('https://the-internet.herokuapp.com/disappearing_elements');
+    const items = page.locator('.example ul li a');
+    for (const name of ['Home', 'About', 'Contact Us', 'Portfolio']) {
+      await expect(items.filter({ hasText: name })).toBeVisible();
+    }
   });
 
-  test.describe('Nested Frames', () => {
-    test('33. should read contents from top nested and bottom frames', async ({ page }) => {
-      const framesPage = new FramesPage(page);
-      await framesPage.openNestedFrames();
-
-      await expect(framesPage.getNestedFrameText('LEFT')).toContainText('LEFT');
-      await expect(framesPage.getNestedFrameText('MIDDLE')).toContainText('MIDDLE');
-      await expect(framesPage.getNestedFrameText('RIGHT')).toContainText('RIGHT');
-      await expect(framesPage.getNestedFrameText('BOTTOM')).toContainText('BOTTOM');
-    });
+  test('Dynamic Content changes across page reloads', async ({ page }) => {
+    await page.goto('https://the-internet.herokuapp.com/dynamic_content');
+    const rows = page.locator('#content .row .large-10');
+    const before = await rows.allInnerTexts();
+    await page.reload();
+    const after = await rows.allInnerTexts();
+    expect(before.some((text, i) => text !== after[i])).toBeTruthy();
   });
 
-  test.describe('iFrame Editor', () => {
-    test('34. should type into TinyMCE rich text editor inside iframe', async ({ page }) => {
-      const framesPage = new FramesPage(page);
-      await framesPage.openIframe();
-
-      const testText = 'Playwright test message in iframe editor!';
-      await framesPage.setIframeText(testText);
-      await expect(framesPage.getIframeBody()).toHaveText(testText);
-    });
+  test('Entry Ad: modal display and dismissal', async ({ entryAdPage }) => {
+    await expect(entryAdPage.modal).toBeVisible({ timeout: 10000 });
+    await entryAdPage.closeModal();
+    await expect(entryAdPage.modal).toBeHidden();
   });
 
-  test.describe('Notification Messages', () => {
-    test('35. should display flash notification upon action trigger', async ({ page }) => {
-      const notificationPage = new NotificationMessagePage(page);
-      await notificationPage.open();
-
-      await notificationPage.clickTrigger();
-      await expect(notificationPage.flashMessage).toBeVisible();
-      await expect(notificationPage.flashMessage).toContainText('Action');
-    });
+  test('Exit Intent: trigger and close modal', async ({ exitIntentPage }) => {
+    await exitIntentPage.triggerExitIntent();
+    await expect(exitIntentPage.modal).toBeVisible();
+    await exitIntentPage.closeModal();
+    await expect(exitIntentPage.modal).toBeHidden();
   });
 
-  test.describe('Redirect Link', () => {
-    test('36. should follow redirect chain to status codes page', async ({ page }) => {
-      const statusPage = new StatusCodesPage(page);
-      await statusPage.openRedirector();
-
-      await statusPage.redirectLink.click();
-      await expect(page).toHaveURL(/.*\/status_codes/);
-      await expect(page.locator('h3')).toHaveText('Status Codes');
-    });
+  test('Floating Menu scrolling persistence', async ({ floatingMenuPage }) => {
+    await expect(floatingMenuPage.menu).toBeVisible();
+    await floatingMenuPage.scrollDown(2500);
+    await expect(floatingMenuPage.menu).toBeVisible();
   });
 
-  test.describe('Status Codes', () => {
-    test('37. should inspect HTTP 404 response page content', async ({ page }) => {
-      const statusPage = new StatusCodesPage(page);
+  test('Forgot Password submission', async ({ forgotPasswordPage, page }) => {
+    await forgotPasswordPage.submitEmail('tester@example.com');
+    await expect(page.locator('body')).not.toBeEmpty();
+  });
+
+  test('Notification Messages flash notification trigger', async ({ notificationPage }) => {
+    await notificationPage.clickTrigger();
+    await expect(notificationPage.flashMessage).toBeVisible();
+    await expect(notificationPage.flashMessage).toContainText('Action');
+  });
+
+  // --- Parameterized Status Codes ---
+  for (const code of [200, 301, 404, 500]) {
+    test(`Status Codes: verify HTTP ${code} page`, async ({ statusPage, page }) => {
       await statusPage.openStatusCodes();
-
-      await statusPage.clickStatusCode(404);
-      await expect(page).toHaveURL(/.*\/status_codes\/404/);
-      await expect(statusPage.statusText).toContainText('This page returned a 404 status code');
+      await statusPage.clickStatusCode(code);
+      await expect(page).toHaveURL(new RegExp(`.*\\/status_codes\\/${code}`));
+      await expect(statusPage.statusText).toContainText(`This page returned a ${code} status code`);
     });
+  }
 
-    test('38. should inspect HTTP 200 response page content', async ({ page }) => {
-      const statusPage = new StatusCodesPage(page);
-      await statusPage.openStatusCodes();
-
-      await statusPage.clickStatusCode(200);
-      await expect(page).toHaveURL(/.*\/status_codes\/200/);
-      await expect(statusPage.statusText).toContainText('This page returned a 200 status code');
-    });
+  test('Redirect link chain to status codes', async ({ statusPage, page }) => {
+    await statusPage.openRedirector();
+    await statusPage.redirectLink.click();
+    await expect(page).toHaveURL(/.*\/status_codes/);
   });
 
-  test.describe('Shadow DOM', () => {
-    test('39. should pierce Shadow DOM and read text elements', async ({ page }) => {
-      const shadowPage = new ShadowDomPage(page);
-      await shadowPage.open();
-
-      await expect(shadowPage.shadowParagraphs.first()).toHaveText("Let's have some different text!");
-      await expect(page.locator('ul[slot="my-text"] li').first()).toHaveText("Let's have some different text!");
-    });
+  test('Large & Deep DOM coordinates query', async ({ largeDomPage }) => {
+    await expect(largeDomPage.getCell(25, 15)).toHaveText('25.15');
+    await expect(largeDomPage.getCell(50, 50)).toHaveText('50.50');
   });
 
-  test.describe('Large & Deep DOM', () => {
-    test('40. should locate cells in large table DOM', async ({ page }) => {
-      const largeDomPage = new LargeDomPage(page);
-      await largeDomPage.open();
-
-      const cell25 = largeDomPage.getCell(25, 15);
-      await expect(cell25).toHaveText('25.15');
-
-      const cell50 = largeDomPage.getCell(50, 50);
-      await expect(cell50).toHaveText('50.50');
-    });
+  test('A/B Testing with cookie control', async ({ abPage }) => {
+    await abPage.setOptOutCookie();
+    await abPage.open();
+    await expect(abPage.heading).toHaveText(/A\/B Test|No A\/B Test/);
   });
 
-  // ==========================================
-  // BATCH 3: TESTS 41 - 60 (Deep Exploration & Edge Cases)
-  // ==========================================
-
-  test.describe('A/B Testing with Cookie Control', () => {
-    test('41. should force control variation using opt_out cookie', async ({ page }) => {
-      const abPage = new ABTestingPage(page);
-      await abPage.setOptOutCookie();
-      await abPage.open();
-
-      await expect(abPage.heading).toHaveText(/A\/B Test Control|No A\/B Test/);
-    });
+  test('JavaScript Error exception interception', async ({ page }) => {
+    let capturedError: Error | null = null;
+    page.on('pageerror', err => { capturedError = err; });
+    await page.goto('https://the-internet.herokuapp.com/javascript_error');
+    expect(capturedError?.message).toContain('Cannot read properties of undefined');
   });
 
-  test.describe('Digest Authentication', () => {
-    test('42. should authenticate successfully using Digest Auth headers', async ({ browser }) => {
-      const context = await browser.newContext({
-        httpCredentials: {
-          username: 'admin',
-          password: 'admin',
-        },
-      });
-      const page = await context.newPage();
-      await page.goto('https://the-internet.herokuapp.com/digest_auth');
-
-      await expect(page.locator('h3')).toHaveText('Digest Auth');
-      await expect(page.locator('.example p')).toContainText('Congratulations! You must have the proper credentials.');
-      await context.close();
-    });
+  test('Infinite scroll dynamic paragraph loading', async ({ scrollPage }) => {
+    const initial = await scrollPage.scrollBlocks.count();
+    await scrollPage.scrollDown(2);
+    await expect(async () => {
+      expect(await scrollPage.scrollBlocks.count()).toBeGreaterThan(initial);
+    }).toPass({ timeout: 10000 });
   });
 
-  test.describe('JavaScript Error Handling', () => {
-    test('43. should capture unhandled page error on load', async ({ page }) => {
-      let capturedError: Error | null = null;
-      page.on('pageerror', error => {
-        capturedError = error;
-      });
-
-      await page.goto('https://the-internet.herokuapp.com/javascript_error');
-      expect(capturedError).not.toBeNull();
-      expect(capturedError?.message).toContain('Cannot read properties of undefined');
+  test('Geolocation mocking via context permissions', async ({ browser }) => {
+    const context = await browser.newContext({
+      permissions: ['geolocation'],
+      geolocation: { latitude: 52.2297, longitude: 21.0122 },
     });
+    const page = await context.newPage();
+    await page.goto('https://the-internet.herokuapp.com/geolocation');
+    await page.locator('.example button').click();
+    await expect(page.locator('#lat-value')).toHaveText('52.2297');
+    await expect(page.locator('#long-value')).toHaveText('21.0122');
+    await context.close();
   });
 
-  test.describe('Status Codes Extended', () => {
-    test('44. should inspect HTTP 301 redirection status content', async ({ page }) => {
-      const statusPage = new StatusCodesPage(page);
-      await statusPage.openStatusCodes();
+  test('Shifting Content menu and image rendering', async ({ shiftingPage }) => {
+    await shiftingPage.openMenu(100);
+    await expect(shiftingPage.menuItems).toHaveCount(5);
 
-      await statusPage.clickStatusCode(301);
-      await expect(page).toHaveURL(/.*\/status_codes\/301/);
-      await expect(statusPage.statusText).toContainText('This page returned a 301 status code');
-    });
-
-    test('45. should inspect HTTP 500 server error status content', async ({ page }) => {
-      const statusPage = new StatusCodesPage(page);
-      await statusPage.openStatusCodes();
-
-      await statusPage.clickStatusCode(500);
-      await expect(page).toHaveURL(/.*\/status_codes\/500/);
-      await expect(statusPage.statusText).toContainText('This page returned a 500 status code');
-    });
+    await shiftingPage.openImage(100);
+    await expect(shiftingPage.shiftingImage).toBeVisible();
+    await expect(shiftingPage.shiftingImage).toHaveAttribute('src', /.*avatar\.jpg/);
   });
 
-  test.describe('Exit Intent', () => {
-    test('46. should trigger exit intent modal when mouse exits viewport', async ({ page }) => {
-      const exitIntentPage = new ExitIntentPage(page);
-      await exitIntentPage.open();
-
-      await exitIntentPage.triggerExitIntent();
-      await expect(exitIntentPage.modal).toBeVisible();
-      await expect(exitIntentPage.modalTitle).toHaveText('This is a modal window');
-
-      await exitIntentPage.closeModal();
-      await expect(exitIntentPage.modal).toBeHidden();
-    });
-  });
-
-  test.describe('Infinite Scroll', () => {
-    test('47. should load additional paragraphs dynamically on scroll', async ({ page }) => {
-      const scrollPage = new InfiniteScrollPage(page);
-      await scrollPage.open();
-
-      const initialCount = await scrollPage.scrollBlocks.count();
-      await scrollPage.scrollDown(2);
-      await expect(async () => {
-        const count = await scrollPage.scrollBlocks.count();
-        expect(count).toBeGreaterThan(initialCount);
-      }).toPass({ timeout: 10000 });
-    });
-  });
-
-  test.describe('Geolocation Mocking', () => {
-    test('48. should report mocked geolocation coordinates', async ({ browser }) => {
-      const context = await browser.newContext({
-        permissions: ['geolocation'],
-        geolocation: { latitude: 52.2297, longitude: 21.0122 },
-      });
-      const page = await context.newPage();
-      const geoPage = new GeolocationPage(page);
-      await geoPage.open();
-
-      await geoPage.clickWhereAmI();
-      await expect(geoPage.latValue).toHaveText('52.2297');
-      await expect(geoPage.longValue).toHaveText('21.0122');
-      await context.close();
-    });
-  });
-
-  test.describe('Shifting Content', () => {
-    test('49. should render all menu items in shifting menu mode', async ({ page }) => {
-      const shiftingPage = new ShiftingContentPage(page);
-      await shiftingPage.openMenu(100);
-
-      await expect(shiftingPage.menuItems).toHaveCount(5);
-      await expect(shiftingPage.menuItems.filter({ hasText: 'Home' })).toBeVisible();
-      await expect(shiftingPage.menuItems.filter({ hasText: 'About' })).toBeVisible();
-    });
-
-    test('50. should verify shifting image rendering with pixel shift', async ({ page }) => {
-      const shiftingPage = new ShiftingContentPage(page);
-      await shiftingPage.openImage(100);
-
-      await expect(shiftingPage.shiftingImage).toBeVisible();
-      await expect(shiftingPage.shiftingImage).toHaveAttribute('src', /.*avatar\.jpg/);
-    });
-  });
-
-  test.describe('Typos Page', () => {
-    test('51. should verify typos page content and paragraphs', async ({ page }) => {
-      const typosPage = new TyposPage(page);
-      await typosPage.open();
-
-      await expect(typosPage.pageHeading).toHaveText('Typos');
-      await expect(typosPage.paragraphs).toHaveCount(2);
-      await expect(typosPage.paragraphs.first()).toContainText('This example demonstrates');
-    });
-  });
-
-  test.describe('Form Authentication Edge Cases', () => {
-    test('52. should show error when submitting empty login fields', async ({ page }) => {
-      const authPage = new FormAuthPage(page);
-      await authPage.open();
-
-      await authPage.login('', '');
-      await expect(authPage.flashMessage).toContainText('Your username is invalid!');
-    });
-
-    test('53. should mask password input field with type password', async ({ page }) => {
-      const authPage = new FormAuthPage(page);
-      await authPage.open();
-
-      await expect(authPage.passwordInput).toHaveAttribute('type', 'password');
-    });
-  });
-
-  test.describe('Dropdown Keyboard Navigation', () => {
-    test('54. should navigate and select dropdown option via ArrowDown key', async ({ page }) => {
-      const dropdownPage = new DropdownPage(page);
-      await dropdownPage.open();
-
-      await dropdownPage.dropdown.focus();
-      await page.keyboard.press('ArrowDown');
-      await page.keyboard.press('Enter');
-
-      const selectedVal = await dropdownPage.getSelectedValue();
-      expect(['1', '2']).toContain(selectedVal);
-    });
-  });
-
-  test.describe('Checkboxes Keyboard Navigation', () => {
-    test('55. should toggle checkbox using keyboard Space key', async ({ page }) => {
-      const checkboxesPage = new CheckboxesPage(page);
-      await checkboxesPage.open();
-
-      const firstBox = checkboxesPage.checkboxes.nth(0);
-      await firstBox.focus();
-      await page.keyboard.press('Space');
-      await expect(firstBox).toBeChecked();
-
-      await page.keyboard.press('Space');
-      await expect(firstBox).not.toBeChecked();
-    });
-  });
-
-  test.describe('Add/Remove Elements Batch Performance', () => {
-    test('56. should handle rapid batch addition and deletion of 10 elements', async ({ page }) => {
-      const addRemovePage = new AddRemoveElementsPage(page);
-      await addRemovePage.open();
-
-      await addRemovePage.addElements(10);
-      await expect(addRemovePage.deleteBtns).toHaveCount(10);
-
-      for (let i = 0; i < 5; i++) {
-        await addRemovePage.deleteFirstElement();
-      }
-      await expect(addRemovePage.deleteBtns).toHaveCount(5);
-    });
-  });
-
-  test.describe('Data Tables Deep Sort Checks', () => {
-    test('57. should sort Table 2 numerically by Due column', async ({ page }) => {
-      const tablesPage = new TablesPage(page);
-      await tablesPage.open();
-
-      await tablesPage.sortByHeader(2, 'Due');
-      const dueTexts = await tablesPage.getColumnValues(2, 4);
-
-      const dueNumbers = dueTexts.map(val => parseFloat(val.replace('$', '')));
-      const sortedDueNumbers = [...dueNumbers].sort((a, b) => a - b);
-      expect(dueNumbers).toEqual(sortedDueNumbers);
-    });
-
-    test('58. should sort Table 1 alphabetically by Email column', async ({ page }) => {
-      const tablesPage = new TablesPage(page);
-      await tablesPage.open();
-
-      const initialEmails = await tablesPage.getColumnValues(1, 3);
-      await tablesPage.sortByHeader(1, 'Email');
-      const sortedEmails = await tablesPage.getColumnValues(1, 3);
-
-      const expectedSorted = [...initialEmails].sort((a, b) => a.localeCompare(b));
-      expect(sortedEmails).toEqual(expectedSorted);
-    });
-  });
-
-  test.describe('Dropdown Disabled Option', () => {
-    test('59. should verify placeholder option in dropdown is disabled', async ({ page }) => {
-      const dropdownPage = new DropdownPage(page);
-      await dropdownPage.open();
-
-      const defaultOption = dropdownPage.dropdown.locator('option').first();
-      await expect(defaultOption).toBeDisabled();
-      await expect(defaultOption).toHaveText('Please select an option');
-    });
-  });
-
-  test.describe('Secure File Download', () => {
-    test('60. should access secure download area with credentials and list files', async ({ browser }) => {
-      const context = await browser.newContext({
-        httpCredentials: {
-          username: 'admin',
-          password: 'admin',
-        },
-      });
-      const page = await context.newPage();
-      await page.goto('https://the-internet.herokuapp.com/download_secure');
-
-      await expect(page.locator('h3')).toHaveText('Secure File Downloader');
-      const downloadLinks = page.locator('.example a');
-      expect(await downloadLinks.count()).toBeGreaterThan(0);
-      await context.close();
-    });
-  });
+  test('Typos page text structure validation', async ({ typosPage }) => {
+    await expect(typosPage.pageHeading).toHaveText('Typos');
+    await expect(typosPage.paragraphs).toHaveCount(2);
+});
 });

@@ -32,3 +32,4 @@ export * from './InfiniteScrollPage';
 export * from './ExitIntentPage';
 export * from './ShiftingContentPage';
 export * from './TyposPage';
+export * from './fixtures';
