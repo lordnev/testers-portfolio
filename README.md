@@ -9,8 +9,10 @@ Witaj w moim portfolio! Ten projekt to zbiór projektów i przykładów testów 
 
 Repozytorium jest podzielone na katalogi odpowiadające różnym frameworkom testowym:
 
-*   **[Cypress](./Cypress/)** - projekt z testami napisanymi we frameworku Cypress (TypeScript). Znajdziesz tam standardową strukturę testów E2E w katalogu `cypress/e2e`, w tym kompleksowy zestaw 60 testów dla strony the-internet.herokuapp.com z wykorzystaniem wzorca Page Object Model.
-*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript), obejmujący zaawansowany zestaw testów dla sklepu internetowego oraz kompleksową suite testową dla strony the-internet.herokuapp.com. Projekt implementuje zaawansowane techniki takie jak:
+*   **[Cypress](./Cypress/)** - projekt z testami napisanymi we frameworku Cypress (TypeScript). Znajdziesz tam standardową strukturę testów E2E w katalogu `cypress/e2e`, w tym:
+        - Kompleksowy zestaw 60 testów dla strony the-internet.herokuapp.com z wykorzystaniem wzorca Page Object Model.
+        - Testy E2E dla sklepu Swag Labs (logowanie parametrzyzowane oraz pełny flow zakupu) z implementacją wzorca Page Object Model.
+*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript), obejmujący zaawansowany zestaw testów dla sklepu internetowego (w tym Swag Labs) oraz kompleksową suite testową dla strony the-internet.herokuapp.com. Projekt implementuje zaawansowane techniki takie jak:
         - Obsługa wielu okien, iFrame'ów i Shadow DOM.
         - Mockowanie geolokalizacji i przechwytywanie błędów JavaScript.
         - Walidacja statusów HTTP i testy wydajnościowe (Large DOM).
@@ -31,11 +33,14 @@ testers-portfolio/
 │   └── cypress/
 │       ├── e2e/                # Testy end-to-end
 │       │   ├── shop.cy.ts      # Testy sklepu (TypeScript)
+│       │   ├── swag-labs.cy.ts # E2E Purchase Flow dla Swag Labs
+│       │   ├── swag-labs-login.cy.ts # Testy logowania Swag Labs
 │       │   └── the-internet.cy.ts # Kompleksowy zestaw 60 testów (TypeScript)
 │       ├── fixtures/           # Dane testowe
 │       │   └── example.json
 │       ├── pages/              # Page Objects
 │       │   ├── the-internet/    # Page Objects dla the-internet.herokuapp.com
+│       │   ├── Swag-Labs/        # Page Objects dla Swag Labs
 │       │   ├── HomePage.ts
 │       │   ├── LoginPage.ts
 │       │   └── ShopPage.ts
@@ -65,8 +70,10 @@ testers-portfolio/
 
 Repozytorium jest podzielone na katalogi odpowiadające różnym frameworkom testowym:
 
-*   **[Cypress](./Cypress/)** - projekt z testami napisanymi we frameworku Cypress (TypeScript). Znajdziesz tam standardową strukturę testów E2E w katalogu `cypress/e2e`, w tym kompleksowy zestaw 60 testów dla strony the-internet.herokuapp.com z wykorzystaniem wzorca Page Object Model.
-*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript), obejmujący zaawansowany zestaw testów dla sklepu internetowego oraz kompleksową suite testową dla strony the-internet.herokuapp.com. Projekt implementuje zaawansowane techniki takie jak:
+*   **[Cypress](./Cypress/)** - projekt z testami napisanymi we frameworku Cypress (TypeScript). Znajdziesz tam standardową strukturę testów E2E w katalogu `cypress/e2e`, w tym:
+        - Kompleksowy zestaw 60 testów dla strony the-internet.herokuapp.com z wykorzystaniem wzorca Page Object Model.
+        - Testy E2E dla sklepu Swag Labs (logowanie parametrzyzowane oraz pełny flow zakupu) z implementacją wzorca Page Object Model.
+*   **[Playwright](./Playwright/)** - projekt z testami wykorzystującymi Playwright (TypeScript), obejmujący zaawansowany zestaw testów dla sklepu internetowego (w tym Swag Labs) oraz kompleksową suite testową dla strony the-internet.herokuapp.com. Projekt implementuje zaawansowane techniki takie jak:
         - Obsługa wielu okien, iFrame'ów i Shadow DOM.
         - Mockowanie geolokalizacji i przechwytywanie błędów JavaScript.
         - Walidacja statusów HTTP i testy wydajnościowe (Large DOM).
