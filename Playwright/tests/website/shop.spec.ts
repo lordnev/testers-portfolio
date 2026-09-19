@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test';
-import { HomePage } from '../../PageObjects/HomePage';
-import { LoginPage } from '../../PageObjects/LoginPage';
-import { ShopPage } from '../../PageObjects/ShopPage';
-import { ProductPage } from '../../PageObjects/ProductPage';
-import { CheckoutPage } from '../../PageObjects/CheckoutPage';
-import { ConsoleLog } from '../../PageObjects/ConsoleLog';
+import { HomePage } from '../../PageObjects/website/HomePage';
+import { LoginPage } from '../../PageObjects/website/LoginPage';
+import { ShopPage } from '../../PageObjects/website/ShopPage';
+import { ProductPage } from '../../PageObjects/website/ProductPage';
+import { CheckoutPage } from '../../PageObjects/website/CheckoutPage';
+import { ConsoleLog } from '../../PageObjects/website/ConsoleLog';
 
 test.describe('Shop Tests - Testers Portfolio', () => {
   let homePage: HomePage;
