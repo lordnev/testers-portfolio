@@ -7,20 +7,26 @@ Witaj w moim portfolio! Ten projekt to zbiór profesjonalnych przykładów test�
 
 ## 🚀 Przegląd Projektów
 
-Repozytorium zawiera kompleksowe suite testowe dla trzech różnych środowisk, demonstrując szeroki wachlarz technik automatyzacji:
+Repozytorium zawiera kompleksowe suite testowe dla czterech różnych środowisk, demonstrując szeroki wachlarz technik automatyzacji:
 
-### 1. DemoQA (`demoqa.com`)
+### 1. OrangeHRM
+Kompleksowe testy systemu HR.
+- **Zakres**: Moduły Admin, PIM, Leave, Performance, Recruitment, My oraz Job.
+- **Implementacja**: Pełny wzorzec **Page Object Model (POM)** w obu frameworkach.
+- **Techniki**: Testy administracyjne, zarządzanie danymi pracowniczymi i przepływy procesowe.
+
+### 2. DemoQA (`demoqa.com`)
 Zaawansowane testy interakcji z elementami UI.
 - **Zakres**: Text boxes, Checkboxes, Radio buttons, Select options, Alerts, Windows, Widgets (Date Picker), oraz zaawansowane interakcje (Drag & Drop, Resizable, Selectable).
 - **Implementacja**: Pełny wzorzec **Page Object Model (POM)** w obu frameworkach.
 - **Techniki**: Obsługa ukrytych elementów, walka z nakładkami reklamowymi (custom ad-blocker), oraz precyzyjne sterowanie myszą.
 
-### 2. The Internet (`the-internet.herokuapp.com`)
+### 3. The Internet (`the-internet.herokuapp.com`)
 Kompleksowy poligon testowy dla automatyzatora.
 - **Zakres**: Ponad 60 scenariuszy testowych.
 - **Techniki**: Shadow DOM, mockowanie geolokalizacji, przechwytywanie błędów JS, walidacja statusów HTTP i obsługa iFrame'ów.
 
-### 3. Swag Labs (SauceDemo)
+### 4. Swag Labs (SauceDemo)
 Testy przepływów biznesowych (Business Flows).
 - **Zakres**: Parametryzowane logowanie i pełny proces zakupowy (End-to-End Purchase Flow).
 - **Implementacja**: Struktura POM zapewniająca wysoką skalowalność.
@@ -36,20 +42,30 @@ testers-portfolio/
 │   └── cypress/
 │       ├── e2e/                # Scenariusze testowe
 │       │   ├── demoqa.cy.ts     # Testy DemoQA
+│       │   ├── orangehrm.cy.ts  # Testy OrangeHRM
+│       │   ├── shop.cy.ts       # Testy Shop
 │       │   ├── swag-labs.cy.ts # E2E Purchase Flow
 │       │   └── the-internet.cy.ts # Suite 60 testów
 │       └── pages/              # Page Objects (POM)
 │           └── demoqa/          # POM dla DemoQA
+│           └── orangehrm/       # POM dla OrangeHRM
+│           └── shop/            # POM dla Shop
 │           └── Swag-Labs/       # POM dla Swag Labs
 │           └── the-internet/    # POM dla The Internet
 └── Playwright/                 # Projekt w Playwright (TypeScript)
     ├── playwright.config.ts    # Konfiguracja globalna
     ├── PageObjects/            # Page Objects (POM)
     │   └── demoqa/              # POM dla DemoQA
-    │   └── ShopPage.ts, LoginPage.ts, etc.
+    │   └── orangehrm/           # POM dla OrangeHRM
+    │   └── Swag-Labs/          # POM dla Swag Labs
+    │   └── the-internet/        # POM dla The Internet
+    │   └── website/            # POM dla Website
     └── tests/                  # Scenariusze testowe
         ├── demoqa/              # Testy DemoQA
-        └── the-internet/        # Testy The Internet
+        ├── orangehrm/           # Testy OrangeHRM
+        ├── Swag-Labs/           # Testy Swag Labs
+        ├── the-internet/        # Testy The Internet
+        └── website/            # Testy Website
 ```
 
 ## 🛠 Technologie
