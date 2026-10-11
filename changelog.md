@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-10-11
+
+### Added
+- **Professional QA Documentation (Playwright & Cypress)** - Implemented a full industry-standard documentation set for both frameworks.
+- **Test Strategy & Planning** - Created detailed `test-strategy.md` and `test-plan.md` for both projects.
+- **Test Case Library** - Added 100+ detailed test cases (20 per module) covering positive, negative and edge-case scenarios.
+- **Bug Tracking System** - Implemented a professional bug reporting system with 40+ detailed reports (including Severity and Priority levels).
+- **Advanced Summary Reports** - Developed comprehensive `test-summary-report.md` files featuring aggregated metrics, failure analysis (Stack Traces, Root Cause), and technical artifacts (Traces, Videos, Screenshots).
+
 ## [1.4.0] - 2026-09-20
+
 
 ### Added
 

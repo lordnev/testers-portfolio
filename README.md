@@ -40,19 +40,18 @@ testers-portfolio/
 ├── README.md                   # Dokumentacja główna
 ├── Cypress/                    # Projekt w Cypress (TypeScript)
 │   └── cypress/
+│       ├── docs/                # 📄 Dokumentacja testowa (Strategie, Test Case'y, Bug Reporty, Raporty)
 │       ├── e2e/                # Scenariusze testowe
 │       │   ├── demoqa.cy.ts     # Testy DemoQA
 │       │   ├── orangehrm.cy.ts  # Testy OrangeHRM
 │       │   ├── shop.cy.ts       # Testy Shop
 │       │   ├── swag-labs.cy.ts # E2E Purchase Flow
 │       │   └── the-internet.cy.ts # Suite 60 testów
-│       └── pages/              # Page Objects (POM)
-│           └── demoqa/          # POM dla DemoQA
-│           └── orangehrm/       # POM dla OrangeHRM
-│           └── shop/            # POM dla Shop
-│           └── Swag-Labs/       # POM dla Swag Labs
-│           └── the-internet/    # POM dla The Internet
+│       └── support/              # Custom commands i konfiguracja
+│           └── commands.js
+│           └── e2e.js
 └── Playwright/                 # Projekt w Playwright (TypeScript)
+    ├── docs/                    # 📄 Dokumentacja testowa (Strategie, Test Case'y, Bug Reporty, Raporty)
     ├── playwright.config.ts    # Konfiguracja globalna
     ├── PageObjects/            # Page Objects (POM)
     │   └── demoqa/              # POM dla DemoQA
@@ -67,6 +66,23 @@ testers-portfolio/
         ├── the-internet/        # Testy The Internet
         └── website/            # Testy Website
 ```
+
+## 📄 Dokumentacja QA (Standardy Branżowe)
+
+W ramach portfolio przygotowałem pełną dokumentację testową dla obu frameworków, odwzorowując proces pracy profesjonalnego testera QA:
+
+### 🛠️ Playwright Docs
+- **Strategia i Plan**: [Strategia Testowania](Playwright/docs/strategy/test-strategy.md) | [Plan Testów](Playwright/docs/strategy/test-plan.md)
+- **Test Case'y**: Zbiór szczegółowych scenariuszy w `/Playwright/docs/test-cases/`
+- **Raporty Błędów**: Rejestr defektów w `/Playwright/docs/bug-reports/open/`
+- **Podsumowanie**: [Profesjonalny Raport z Wykonania (Summary Report)](Playwright/docs/summaries/test-summary-report.md)
+
+### 🛠️ Cypress Docs
+- **Strategia i Plan**: [Strategia Testowania](Cypress/cypress/docs/strategy/test-strategy.md) | [Plan Testów](Cypress/cypress/docs/strategy/test-plan.md)
+- **Test Case'y**: Zbiór szczegółowych scenariuszy w `/Cypress/cypress/docs/test-cases/`
+- **Raporty Błędów**: Rejestr defektów w `/Cypress/cypress/docs/bug-reports/open/`
+- **Podsumowanie**: [Profesjonalny Raport z Wykonania (Summary Report)](Cypress/cypress/docs/summaries/test-summary-report.md)
+
 
 ## 🛠 Technologie
 
