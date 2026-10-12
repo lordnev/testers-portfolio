@@ -27,9 +27,15 @@ Kompleksowy poligon testowy dla automatyzatora.
 - **Techniki**: Shadow DOM, mockowanie geolokalizacji, przechwytywanie błędów JS, walidacja statusów HTTP i obsługa iFrame'ów.
 
 ### 4. Swag Labs (SauceDemo)
-Testy przepływów biznesowych (Business Flows).
+Kompleksowe testy przepływów biznesowych (Business Flows).
 - **Zakres**: Parametryzowane logowanie i pełny proces zakupowy (End-to-End Purchase Flow).
 - **Implementacja**: Struktura POM zapewniająca wysoką skalowalność.
+
+### 5. API Testing
+Automatyzacja testów warstwy usługowej.
+- **Zakres**: Walidacja endpointów REST API, testy statusów HTTP, weryfikacja schematów odpowiedzi oraz danych w formacie JSON.
+- **Techniki**: Testy integracyjne, obsługa metod GET/POST/PUT/DELETE oraz walidacja logiki biznesowej po stronie serwera.
+
 
 ## 📂 Struktura Repozytorium
 
@@ -50,21 +56,22 @@ testers-portfolio/
 │       └── support/              # Custom commands i konfiguracja
 │           └── commands.js
 │           └── e2e.js
-└── Playwright/                 # Projekt w Playwright (TypeScript)
-    ├── docs/                    # 📄 Dokumentacja testowa (Strategie, Test Case'y, Bug Reporty, Raporty)
-    ├── playwright.config.ts    # Konfiguracja globalna
-    ├── PageObjects/            # Page Objects (POM)
-    │   └── demoqa/              # POM dla DemoQA
-    │   └── orangehrm/           # POM dla OrangeHRM
-    │   └── Swag-Labs/          # POM dla Swag Labs
-    │   └── the-internet/        # POM dla The Internet
-    │   └── website/            # POM dla Website
-    └── tests/                  # Scenariusze testowe
-        ├── demoqa/              # Testy DemoQA
-        ├── orangehrm/           # Testy OrangeHRM
-        ├── Swag-Labs/           # Testy Swag Labs
-        ├── the-internet/        # Testy The Internet
-        └── website/            # Testy Website
+├── Playwright/                 # Projekt w Playwright (TypeScript)
+│   ├── docs/                    # 📄 Dokumentacja testowa (Strategie, Test Case'y, Bug Reporty, Raporty)
+│   ├── playwright.config.ts    # Konfiguracja globalna
+│   ├── PageObjects/            # Page Objects (POM)
+│   │   └── demoqa/              # POM dla DemoQA
+│   │   └── orangehrm/           # POM dla OrangeHRM
+│   │   └── Swag-Labs/          # POM dla Swag Labs
+│   │   └── the-internet/        # POM dla The Internet
+│   │   └── website/            # POM dla Website
+│   └── tests/                  # Scenariusze testowe
+│       ├── demoqa/              # Testy DemoQA
+│       ├── orangehrm/           # Testy OrangeHRM
+│       ├── Swag-Labs/           # Testy Swag Labs
+│       ├── the-internet/        # Testy The Internet
+│       └── website/            # Testy Website
+└── api-tests/                  # Testy API
 ```
 
 ## 📄 Dokumentacja QA (Standardy Branżowe)
