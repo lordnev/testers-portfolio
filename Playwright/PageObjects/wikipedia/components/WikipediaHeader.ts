@@ -8,10 +8,9 @@ export class WikipediaHeader {
 
     constructor(page: Page) {
         this.page = page;
-        // Use comma-separated CSS selectors for multiple possibilities
-        this.searchInput = page.locator('input[name="search"], input#searchInput').first();
-        this.searchButton = page.locator('button[type="submit"], span.pure-button-primary').first();
-        this.mainLogo = page.locator('.mw-wiki-logo, .mw-wiki-logo-container, #p-logo, a.mw-wiki-logo').first();
+        this.searchInput = page.getByRole('searchbox', { name: /Search/i }).or(page.locator('input[name="search"], input#searchInput').first());
+        this.searchButton = page.getByRole('button', { name: /Search/i }).or(page.locator('button[type="submit"], span.pure-button-primary').first());
+        this.mainLogo = page.getByRole('link', { name: /Wikipedia/i }).first().or(page.locator('.mw-wiki-logo, .mw-wiki-logo-container, #p-logo, a.mw-wiki-logo').first());
     }
 
     async searchFor(text: string) {
