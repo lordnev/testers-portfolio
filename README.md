@@ -3,7 +3,45 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18-green)](https://nodejs.org/)
 
-Witaj w moim portfolio! Ten projekt to zbiór profesjonalnych przykładów testów automatycznych E2E stworzonych z użyciem najpopularniejszych frameworków: **Cypress** oraz **Playwright**.
+# 👋 O mnie
+
+Jestem pasjonatem zapewniania jakości oprogramowania, który łączy analityczne podejście z techniczną biegłością w automatyzacji. Moim celem jest dostarczanie produktów najwyższej jakości poprzez precyzyjne projektowanie scenariuszy testowych oraz budowanie skalowalnych i utrzymywalnych frameworków automatyzacyjnych.
+
+Wierzę, że rola testera to nie tylko znajdowanie błędów, ale przede wszystkim analiza wymagań i zapobieganie ich powstawaniu. Dzięki dbałości o szczegóły i systematyczności, potrafię skutecznie identyfikować krytyczne defekty w złożonych systemach.
+
+### 🛠️ Moje Kompetencje
+
+- **Automatyzacja E2E**: Tworzenie kompleksowych suite'ów testowych w **Cypress** oraz **Playwright**.
+- **Testowanie API**: Zaawansowana walidacja endpointów REST za pomocą **Postman**, weryfikacja schematów JSON oraz testy integracyjne.
+- **Analiza i Dokumentacja**: Projektowanie strategii testowania, planów testów, szczegółowych przypadków testowych (Test Cases) oraz profesjonalnych raportów z błędów.
+- **Narzędzia i Standardy**: Biegła obsługa **Git**, **Jira**, **SQL** oraz praca w metodyce **Scrum**.
+- **Języki**: TypeScript, JavaScript, SQL.
+
+### 🎓 Kursy i Certyfikaty
+- **ISTQB Certified Tester Fundation Lavel (CTFL) Syllabus Version v4.0**.
+
+### 🌟 Umiejętności
+- **Twarde**: Projektowanie Test Case'ów, Bug Reporting, API Testing, CI/CD (GitHub Actions), SQL Profiling.
+- **Miękkie**: 
+  - **Analityczne myślenie**: Zdolność do szybkigo znajdowania luk w dokumentacji i wymaganiach.
+  - **Komunikatywność**: Skuteczna współpraca z deweloperami i Product Ownerami w celu szybkiej naprawy błędów.
+  - **Szybka adaptacja**: Umiejętność błyskawicznej nauki nowych narzędzi i technologii.
+  - **Dbałość o detale**: Precyzyjne podejście do weryfikacji UI/UX i logiki biznesowej.
+
+### 🌐 Obecność w sieci
+- **WWW**: [adamowicz.pro](https://adamowicz.pro) – prywatna strona internetowa.
+
+- **WWW**: [adamowicz.it](https://adamowicz.it) – autorska strona łącząca poradniki technologiczne z refleksjami nad biznesem, produktywnością.
+
+- **LinkedIn**: [linkedin/badamowicz](https://www.linkedin.com/in/badamowicz/)
+- **Portfolio**: [github/lordnev](https://github.com/lordnev/testers-portfolio)
+
+
+# 🧪 Portfolio testerskie
+
+Ten Projekt to zbiór profesjonalnych przykładów testów automatycznych E2E stworzonych z użyciem najpopularniejszych frameworków: **Cypress** oraz **Playwright**.
+
+#
 
 ## 🚀 Przegląd Projektów
 
