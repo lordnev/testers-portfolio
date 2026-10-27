@@ -2,3 +2,7 @@ Cypress/node_modules
 Playwright/node_modules
 Playwright\.env
 Playwright\test-data
+.playwright-cli/
+.agents
+.claude
+.playwright
