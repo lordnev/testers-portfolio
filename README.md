@@ -64,13 +64,37 @@ Kompleksowy poligon testowy dla automatyzatora.
 - **Zakres**: Ponad 60 scenariuszy testowych.
 - **Techniki**: Shadow DOM, mockowanie geolokalizacji, przechwytywanie błędów JS, walidacja statusów HTTP i obsługa iFrame'ów.
 
+### 1. OrangeHRM
+Kompleksowe testy systemu HR.
+- **Zakres**: Moduły Admin, PIM, Leave, Performance, Recruitment, My oraz Job.
+- **Implementacja**: Pełny wzorzec **Page Object Model (POM)** w obu frameworkach.
+- **Techniki**: Testy administracyjne, zarządzanie danymi pracowniczymi i przepływy procesowe.
+
+### 2. DemoQA (`demoqa.com`)
+Zaawansowane testy interakcji z elementami UI.
+- **Zakres**: Text boxes, Checkboxes, Radio buttons, Select options, Alerts, Windows, Widgets (Date Picker), oraz zaawansowane interakcje (Drag & Drop, Resizable, Selectable).
+- **Implementacja**: Pełny wzorzec **Page Object Model (POM)** w obu frameworkach.
+- **Techniki**: Obsługa ukrytych elementów, walka z nakładkami reklamowymi (custom ad-blocker), oraz precyzyjne sterowanie myszą.
+
+### 3. The Internet (`the-internet.herokuapp.com`)
+Kompleksowy poligon testowy dla automatyzatora.
+- **Zakres**: Ponad 60 scenariuszy testowych.
+- **Techniki**: Shadow DOM, mockowanie geolokalizacji, przechwytywanie błędów JS, walidacja statusów HTTP i obsługa iFrame'ów.
+
 ### 4. Swag Labs (SauceDemo)
 Kompleksowe testy przepływów biznesowych (Business Flows).
 - **Zakres**: Parametryzowane logowanie i pełny proces zakupowy (End-to-End Purchase Flow).
 - **Implementacja**: Struktura POM zapewniająca wysoką skalowalność.
 
-### 5. API Testing
+### 5. Wikipedia (`wikipedia.org`)
+Testy stabilności i elastyczności selektorów w dużym, dynamicznym portalu.
+- **Zakres**: 20 scenariuszy testowych obejmujących wyszukiwanie, autoryzację, nawigację oraz weryfikację treści.
+- **Implementacja**: Zaawansowany wzorzec **POM** z podziałem na komponenty strony.
+- **Techniki**: Obsługa wielu wersji interfejsu (Vector 2022), elastyczne selektory (multi-selectors) oraz synchronizacja stanu sieci.
+
+### 6. API Testing
 Automatyzacja testów warstwy usługowej.
+
 - **Zakres**: Walidacja endpointów REST API, testy statusów HTTP, weryfikacja schematów odpowiedzi oraz danych w formacie JSON.
 - **Techniki**: Testy integracyjne, obsługa metod GET/POST/PUT/DELETE oraz walidacja logiki biznesowej po stronie serwera.
 
@@ -90,7 +114,9 @@ testers-portfolio/
 │       │   ├── orangehrm.cy.ts  # Testy OrangeHRM
 │       │   ├── shop.cy.ts       # Testy Shop
 │       │   ├── swag-labs.cy.ts # E2E Purchase Flow
+│       │   ├── swag-labs.cy.ts # E2E Purchase Flow
 │       │   └── the-internet.cy.ts # Suite 60 testów
+│       │   └── wikipedia.cy.js # Testy Wikipedia (POM)
 │       └── support/              # Custom commands i konfiguracja
 │           └── commands.js
 │           └── e2e.js
@@ -108,6 +134,7 @@ testers-portfolio/
 │       ├── orangehrm/           # Testy OrangeHRM
 │       ├── Swag-Labs/           # Testy Swag Labs
 │       ├── the-internet/        # Testy The Internet
+│       ├── wikipedia/            # Testy Wikipedia (POM)
 │       └── website/            # Testy Website
 └── api-tests/                  # Testy API
 ```

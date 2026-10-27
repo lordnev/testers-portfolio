@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-10-27
+
+### Added
+- **Wikipedia Test Suite** - Implemented 20 professional E2E test cases for `wikipedia.org` in both Playwright and Cypress.
+- **Advanced POM** - Developed a component-based Page Object Model to handle multiple UI versions (Vector 2022) and dynamic DOM structures.
+- **Technical Improvements** - Integrated multi-selectors and network state synchronization to ensure stability across different portal versions.
+
 ## [1.6.0] - 2026-10-12
+
 
 ### Added
 - **API Tests** - Implemented a professional API testing suite to validate REST endpoints, HTTP status codes, and JSON response schemas.
