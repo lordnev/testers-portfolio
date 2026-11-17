@@ -1,36 +1,37 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../PageObjects/orangehrm/LoginPage';
-import { DashboardPage } from '../../PageObjects/orangehrm/DashboardPage';
-import { MyPage } from '../../PageObjects/orangehrm/MyPage';
-import dotenv from 'dotenv';
-import path from 'path';
+import { test, expect } from '../../fixtures/test-fixtures';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+test.describe('OrangeHRM My Page Suite @ui', () => {
+  test.describe.configure({ retries: 1 });
 
-test.describe('OrangeHRM My Page Suite', () => {
-    let loginPage: LoginPage;
-    let dashboardPage: DashboardPage;
-    let myPage: MyPage;
+  test.beforeEach(async ({ orangeHrmAuthenticatedPage, orangeHrmDashboardPage }) => {
+    await orangeHrmDashboardPage.navigateToMy();
+  });
 
-    test.beforeEach(async ({ page }) => {
-        loginPage = new LoginPage(page);
-        dashboardPage = new DashboardPage(page);
-        myPage = new MyPage(page);
+  test('My Page Personal Info @smoke', async ({ orangeHrmAuthenticatedPage, page }) => {
+    await expect(page.locator('.oxd-card')).toBeVisible();
+    await expect(page.getByText('Personal Details')).toBeVisible();
+  });
 
-        await loginPage.goto();
-        await loginPage.login(process.env.ORANGEHRM_USERNAME!, process.env.ORANGEHRM_PASSWORD!);
-        await dashboardPage.navigateToMy();
-    });
+  test('Verify personal contact details load @smoke', async ({ page }) => {
+    await page.getByRole('link', { name: 'Contact Details' }).click();
+    await expect(page.getByText('Contact Details')).toBeVisible();
+  });
 
-    test('My Page Personal Info', async () => {
-        await myPage.verifyPersonalDetails();
-    });
+  test('Check profile picture visibility @smoke', async ({ page }) => {
+    await expect(page.locator('.oxd-userprofile-image')).toBeVisible();
+  });
 
-    test('Verify personal contact details load', async () => {
-        await myPage.verifyContactDetails();
-    });
+  test('Update personal details @regression', async ({ page }) => {
+    await page.getByRole('button', { name: 'Edit' }).click();
+    await page.getByPlaceholder('First Name').clear();
+    await page.getByPlaceholder('First Name').fill('Updated');
+    await page.getByRole('button', { name: 'Save' }).click();
+    await expect(page.locator('.oxd-toast--success')).toBeVisible({ timeout: 10000 });
+  });
 
-    test('Check profile picture visibility', async () => {
-        await myPage.verifyProfilePic();
-    });
+  test('Add attachment @regression', async ({ page }) => {
+    await page.getByRole('link', { name: 'Attachments' }).click();
+    await page.getByRole('button', { name: 'Add' }).click();
+    await expect(page.locator('.oxd-table-card')).toBeVisible();
+  });
 });

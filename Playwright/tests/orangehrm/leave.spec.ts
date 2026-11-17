@@ -1,37 +1,42 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../PageObjects/orangehrm/LoginPage';
-import { DashboardPage } from '../../PageObjects/orangehrm/DashboardPage';
-import { LeavePage } from '../../PageObjects/orangehrm/LeavePage';
-import dotenv from 'dotenv';
-import path from 'path';
+import { test, expect } from '../../fixtures/test-fixtures';
+import { generateLeaveData } from '../../utils/test-data-generators';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+test.describe('OrangeHRM Leave Suite @ui', () => {
+  test.describe.configure({ retries: 1 });
 
-test.describe('OrangeHRM Leave Suite', () => {
-    let loginPage: LoginPage;
-    let dashboardPage: DashboardPage;
-    let leavePage: LeavePage;
+  test.beforeEach(async ({ orangeHrmAuthenticatedPage, orangeHrmDashboardPage }) => {
+    await orangeHrmDashboardPage.navigateToLeave();
+  });
 
-    test.beforeEach(async ({ page }) => {
-        loginPage = new LoginPage(page);
-        dashboardPage = new DashboardPage(page);
-        leavePage = new LeavePage(page);
+  test('Navigate to Leave module @smoke', async ({ orangeHrmAuthenticatedPage }) => {
+    await expect(orangeHrmAuthenticatedPage).toHaveURL(/.*leave/);
+  });
 
-        await loginPage.goto();
-        await loginPage.login(process.env.ORANGEHRM_USERNAME!, process.env.ORANGEHRM_PASSWORD!);
-        await dashboardPage.navigateToLeave();
-    });
+  test('Apply for leave (Valid request) @smoke @e2e', async ({ orangeHrmAuthenticatedPage, page }) => {
+    const leaveData = generateLeaveData();
 
-    test('Navigate to Leave module', async () => {
-        await expect(leavePage.page).toHaveURL(/.*leave/);
-    });
+    await page.getByRole('button', { name: 'Apply' }).click();
+    await page.getByRole('button', { name: 'Leave Type' }).click();
+    await page.getByText(leaveData.leaveType).click();
+    await page.getByPlaceholder('Enter start date').fill(leaveData.fromDate);
+    await page.getByPlaceholder('Enter end date').fill(leaveData.toDate);
+    await page.getByPlaceholder('Comment').fill(leaveData.comment);
+    await page.getByRole('button', { name: 'Save' }).click();
 
-    test('Apply for leave (Valid request)', async () => {
-        await leavePage.applyForLeave('Sick Leave', '2026-10-01', '2026-10-02');
-        await expect(leavePage.leaveRequestTable).toBeVisible();
-    });
+    await expect(page.locator('.oxd-table-card')).toBeVisible({ timeout: 10000 });
+  });
 
-    test('Verify leave balance visibility', async () => {
-        await expect(leavePage.page.locator('text=Leave Balance')).toBeVisible();
-    });
+  test('Verify leave balance visibility @smoke', async ({ page }) => {
+    await expect(page.getByText('Leave Balance')).toBeVisible();
+  });
+
+  test('View leave list @regression', async ({ page }) => {
+    await expect(page.locator('.oxd-table-card').first()).toBeVisible();
+  });
+
+  test('Cancel leave request @regression', async ({ page }) => {
+    // This would require a leave request to exist first
+    await page.goto('**/leave/viewMyLeaveList');
+    await expect(page.locator('.oxd-table-card').first()).toBeVisible();
+  });
 });

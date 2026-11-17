@@ -1,15 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+import path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
- */
-import dotenv from 'dotenv';
-import path from 'path';
-dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
-
-/**
- * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
   testDir: './tests',
@@ -22,17 +19,40 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+  reporter: [
+    ['html', { open: 'never' }],
+    ['json', { outputFile: 'test-results/results.json' }],
+    ['junit', { outputFile: 'test-results/results.xml' }],
+    ['line'],
+    ['allure-playwright', { outputFolder: 'allure-results', detail: true }],
+  ],
+
+  /* Global test settings */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'https://reqres.in',
+    baseURL: process.env.BASE_URL || 'https://reqres.in',
     ignoreHTTPSErrors: true,
     viewport: { width: 1280, height: 720 },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    video: 'retain-on-failure',
+    screenshot: 'only-on-failure',
+
+    /* Global timeouts */
+    actionTimeout: 10_000,
+    navigationTimeout: 30_000,
   },
+
+  /* Expect timeout for assertions */
+  expect: {
+    timeout: 10_000,
+    toHaveScreenshot: { maxDiffPixels: 100, threshold: 0.2 },
+  },
+
+  /* Output directories */
+  outputDir: 'test-results/',
+  snapshotDir: 'test-snapshots/',
 
   /* Configure projects for major browsers */
   projects: [
@@ -41,25 +61,25 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
 
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
 
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'Mobile Safari',
+      use: { ...devices['iPhone 12'] },
+    },
 
     /* Test against branded browsers. */
     // {
@@ -72,10 +92,13 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
+  /* Global setup/teardown */
+  globalSetup: require.resolve('./global-setup'),
+  globalTeardown: require.resolve('./global-teardown'),
+
+  /* Test metadata */
+  metadata: {
+    testEnvironment: process.env.NODE_ENV || 'development',
+    testRunId: process.env.BUILD_NUMBER || Date.now().toString(),
+  },
 });

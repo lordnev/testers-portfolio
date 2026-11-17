@@ -1,0 +1,338 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 11,
+    "passes": 1,
+    "pending": 0,
+    "failures": 10,
+    "start": "2026-11-17T20:06:27.636Z",
+    "end": "2026-11-17T20:07:15.113Z",
+    "duration": 47477,
+    "testsRegistered": 11,
+    "passPercent": 9.090909090909092,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "51ac6e4d-dc63-4759-b9c9-ed0fe8c0d7fd",
+      "title": "",
+      "fullFile": "cypress\\e2e\\swag-labs\\login.cy.ts",
+      "file": "cypress\\e2e\\swag-labs\\login.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "b7a2b007-44f3-41d1-9f25-29b39c91cf16",
+          "title": "Swag Labs Login Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Login with Standard user (standard_user)",
+              "fullTitle": "Swag Labs Login Tests Login with Standard user (standard_user)",
+              "timedOut": null,
+              "duration": 1114,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login(username, password);\nif (expectsSuccess) {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectSuccess();\n}\nelse {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Sorry, this user has been locked out.');\n}",
+              "err": {
+                "message": "TypeError: cy.waitForNetworkIdle is not a function",
+                "estack": "TypeError: cy.waitForNetworkIdle is not a function\n    at LoginPage.login (webpack://cypress/./cypress/pages/Swag-Labs/LoginPage.ts:32:7)\n    at Context.eval (webpack://cypress/./cypress/e2e/swag-labs/login.cy.ts:19:16)\n    at runnable.fn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:149829:19)\n    at callFn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169209:21)\n    at Runnable.run (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169196:7)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:175296:30)\n    at PassThroughHandlerContext.finallyHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4045:23)\n    at PassThroughHandlerContext.tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)",
+                "diff": null
+              },
+              "uuid": "2c72fe19-4564-4a63-9454-830077a64e11",
+              "parentUUID": "b7a2b007-44f3-41d1-9f25-29b39c91cf16",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with Locked out user (locked_out_user)",
+              "fullTitle": "Swag Labs Login Tests Login with Locked out user (locked_out_user)",
+              "timedOut": null,
+              "duration": 866,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login(username, password);\nif (expectsSuccess) {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectSuccess();\n}\nelse {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Sorry, this user has been locked out.');\n}",
+              "err": {
+                "message": "TypeError: cy.waitForNetworkIdle is not a function",
+                "estack": "TypeError: cy.waitForNetworkIdle is not a function\n    at LoginPage.login (webpack://cypress/./cypress/pages/Swag-Labs/LoginPage.ts:32:7)\n    at Context.eval (webpack://cypress/./cypress/e2e/swag-labs/login.cy.ts:19:16)\n    at runnable.fn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:149829:19)\n    at callFn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169209:21)\n    at Runnable.run (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169196:7)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:175296:30)\n    at PassThroughHandlerContext.finallyHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4045:23)\n    at PassThroughHandlerContext.tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)",
+                "diff": null
+              },
+              "uuid": "35476c60-3e64-499b-86a4-8b741c9a3957",
+              "parentUUID": "b7a2b007-44f3-41d1-9f25-29b39c91cf16",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with Problem user (problem_user)",
+              "fullTitle": "Swag Labs Login Tests Login with Problem user (problem_user)",
+              "timedOut": null,
+              "duration": 1143,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login(username, password);\nif (expectsSuccess) {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectSuccess();\n}\nelse {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Sorry, this user has been locked out.');\n}",
+              "err": {
+                "message": "TypeError: cy.waitForNetworkIdle is not a function",
+                "estack": "TypeError: cy.waitForNetworkIdle is not a function\n    at LoginPage.login (webpack://cypress/./cypress/pages/Swag-Labs/LoginPage.ts:32:7)\n    at Context.eval (webpack://cypress/./cypress/e2e/swag-labs/login.cy.ts:19:16)\n    at runnable.fn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:149829:19)\n    at callFn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169209:21)\n    at Runnable.run (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169196:7)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:175296:30)\n    at PassThroughHandlerContext.finallyHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4045:23)\n    at PassThroughHandlerContext.tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)",
+                "diff": null
+              },
+              "uuid": "4ee89f07-3832-40e4-930b-57173f32a507",
+              "parentUUID": "b7a2b007-44f3-41d1-9f25-29b39c91cf16",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with Performance glitch user (performance_glitch_user)",
+              "fullTitle": "Swag Labs Login Tests Login with Performance glitch user (performance_glitch_user)",
+              "timedOut": null,
+              "duration": 974,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login(username, password);\nif (expectsSuccess) {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectSuccess();\n}\nelse {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Sorry, this user has been locked out.');\n}",
+              "err": {
+                "message": "TypeError: cy.waitForNetworkIdle is not a function",
+                "estack": "TypeError: cy.waitForNetworkIdle is not a function\n    at LoginPage.login (webpack://cypress/./cypress/pages/Swag-Labs/LoginPage.ts:32:7)\n    at Context.eval (webpack://cypress/./cypress/e2e/swag-labs/login.cy.ts:19:16)\n    at runnable.fn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:149829:19)\n    at callFn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169209:21)\n    at Runnable.run (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169196:7)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:175296:30)\n    at PassThroughHandlerContext.finallyHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4045:23)\n    at PassThroughHandlerContext.tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)",
+                "diff": null
+              },
+              "uuid": "738720f2-9f34-4e61-a4b2-260080ac0333",
+              "parentUUID": "b7a2b007-44f3-41d1-9f25-29b39c91cf16",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with Error user (error_user)",
+              "fullTitle": "Swag Labs Login Tests Login with Error user (error_user)",
+              "timedOut": null,
+              "duration": 984,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login(username, password);\nif (expectsSuccess) {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectSuccess();\n}\nelse {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Sorry, this user has been locked out.');\n}",
+              "err": {
+                "message": "TypeError: cy.waitForNetworkIdle is not a function",
+                "estack": "TypeError: cy.waitForNetworkIdle is not a function\n    at LoginPage.login (webpack://cypress/./cypress/pages/Swag-Labs/LoginPage.ts:32:7)\n    at Context.eval (webpack://cypress/./cypress/e2e/swag-labs/login.cy.ts:19:16)\n    at runnable.fn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:149829:19)\n    at callFn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169209:21)\n    at Runnable.run (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169196:7)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:175296:30)\n    at PassThroughHandlerContext.finallyHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4045:23)\n    at PassThroughHandlerContext.tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)",
+                "diff": null
+              },
+              "uuid": "6efc9925-4d12-4a11-a453-b64771bb657a",
+              "parentUUID": "b7a2b007-44f3-41d1-9f25-29b39c91cf16",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with Visual user (visual_user)",
+              "fullTitle": "Swag Labs Login Tests Login with Visual user (visual_user)",
+              "timedOut": null,
+              "duration": 991,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login(username, password);\nif (expectsSuccess) {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectSuccess();\n}\nelse {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Sorry, this user has been locked out.');\n}",
+              "err": {
+                "message": "TypeError: cy.waitForNetworkIdle is not a function",
+                "estack": "TypeError: cy.waitForNetworkIdle is not a function\n    at LoginPage.login (webpack://cypress/./cypress/pages/Swag-Labs/LoginPage.ts:32:7)\n    at Context.eval (webpack://cypress/./cypress/e2e/swag-labs/login.cy.ts:19:16)\n    at runnable.fn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:149829:19)\n    at callFn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169209:21)\n    at Runnable.run (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169196:7)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:175296:30)\n    at PassThroughHandlerContext.finallyHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4045:23)\n    at PassThroughHandlerContext.tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)",
+                "diff": null
+              },
+              "uuid": "218d4157-8d88-4219-9c61-d93e9c1302f9",
+              "parentUUID": "b7a2b007-44f3-41d1-9f25-29b39c91cf16",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with empty credentials",
+              "fullTitle": "Swag Labs Login Tests Login with empty credentials",
+              "timedOut": null,
+              "duration": 1173,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login('', '');\n_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Username is required');",
+              "err": {
+                "message": "TypeError: cy.waitForNetworkIdle is not a function",
+                "estack": "TypeError: cy.waitForNetworkIdle is not a function\n    at LoginPage.login (webpack://cypress/./cypress/pages/Swag-Labs/LoginPage.ts:32:7)\n    at Context.eval (webpack://cypress/./cypress/e2e/swag-labs/login.cy.ts:30:14)\n    at runnable.fn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:149829:19)\n    at callFn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169209:21)\n    at Runnable.run (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169196:7)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:175296:30)\n    at PassThroughHandlerContext.finallyHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4045:23)\n    at PassThroughHandlerContext.tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)",
+                "diff": null
+              },
+              "uuid": "2dc6e8e6-480f-44b5-9d1f-764552c75cd4",
+              "parentUUID": "b7a2b007-44f3-41d1-9f25-29b39c91cf16",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with invalid password",
+              "fullTitle": "Swag Labs Login Tests Login with invalid password",
+              "timedOut": null,
+              "duration": 912,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login('standard_user', 'wrong_password');\n_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Username and password do not match');",
+              "err": {
+                "message": "TypeError: cy.waitForNetworkIdle is not a function",
+                "estack": "TypeError: cy.waitForNetworkIdle is not a function\n    at LoginPage.login (webpack://cypress/./cypress/pages/Swag-Labs/LoginPage.ts:32:7)\n    at Context.eval (webpack://cypress/./cypress/e2e/swag-labs/login.cy.ts:35:14)\n    at runnable.fn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:149829:19)\n    at callFn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169209:21)\n    at Runnable.run (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169196:7)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:175296:30)\n    at PassThroughHandlerContext.finallyHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4045:23)\n    at PassThroughHandlerContext.tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)",
+                "diff": null
+              },
+              "uuid": "5ec89251-653a-44e9-9654-eba1f4db6868",
+              "parentUUID": "b7a2b007-44f3-41d1-9f25-29b39c91cf16",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Verify error message visibility",
+              "fullTitle": "Swag Labs Login Tests Verify error message visibility",
+              "timedOut": null,
+              "duration": 1480,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login('invalid', 'invalid');\n_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.errorContainer.should('be.visible');",
+              "err": {
+                "message": "TypeError: cy.waitForNetworkIdle is not a function",
+                "estack": "TypeError: cy.waitForNetworkIdle is not a function\n    at LoginPage.login (webpack://cypress/./cypress/pages/Swag-Labs/LoginPage.ts:32:7)\n    at Context.eval (webpack://cypress/./cypress/e2e/swag-labs/login.cy.ts:40:14)\n    at runnable.fn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:149829:19)\n    at callFn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169209:21)\n    at Runnable.run (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169196:7)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:175296:30)\n    at PassThroughHandlerContext.finallyHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4045:23)\n    at PassThroughHandlerContext.tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)",
+                "diff": null
+              },
+              "uuid": "52b1bb87-e7bb-49ab-9e31-773a58dd7b91",
+              "parentUUID": "b7a2b007-44f3-41d1-9f25-29b39c91cf16",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Clear credentials after failed login",
+              "fullTitle": "Swag Labs Login Tests Clear credentials after failed login",
+              "timedOut": null,
+              "duration": 774,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login('invalid', 'invalid');\n_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.clearForm();\n_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.usernameInput.should('have.value', '');\n_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.passwordInput.should('have.value', '');",
+              "err": {
+                "message": "TypeError: cy.waitForNetworkIdle is not a function",
+                "estack": "TypeError: cy.waitForNetworkIdle is not a function\n    at LoginPage.login (webpack://cypress/./cypress/pages/Swag-Labs/LoginPage.ts:32:7)\n    at Context.eval (webpack://cypress/./cypress/e2e/swag-labs/login.cy.ts:45:14)\n    at runnable.fn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:149829:19)\n    at callFn (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169209:21)\n    at Runnable.run (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:169196:7)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:175296:30)\n    at PassThroughHandlerContext.finallyHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4045:23)\n    at PassThroughHandlerContext.tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)",
+                "diff": null
+              },
+              "uuid": "0b055368-9b33-42f6-bb5d-910a327d3c48",
+              "parentUUID": "b7a2b007-44f3-41d1-9f25-29b39c91cf16",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Verify login page elements",
+              "fullTitle": "Swag Labs Login Tests Verify login page elements",
+              "timedOut": null,
+              "duration": 203,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.verifyPageElements();",
+              "err": {},
+              "uuid": "22715844-9e12-4a03-bcfe-17404a177bb8",
+              "parentUUID": "b7a2b007-44f3-41d1-9f25-29b39c91cf16",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "22715844-9e12-4a03-bcfe-17404a177bb8"
+          ],
+          "failures": [
+            "2c72fe19-4564-4a63-9454-830077a64e11",
+            "35476c60-3e64-499b-86a4-8b741c9a3957",
+            "4ee89f07-3832-40e4-930b-57173f32a507",
+            "738720f2-9f34-4e61-a4b2-260080ac0333",
+            "6efc9925-4d12-4a11-a453-b64771bb657a",
+            "218d4157-8d88-4219-9c61-d93e9c1302f9",
+            "2dc6e8e6-480f-44b5-9d1f-764552c75cd4",
+            "5ec89251-653a-44e9-9654-eba1f4db6868",
+            "52b1bb87-e7bb-49ab-9e31-773a58dd7b91",
+            "0b055368-9b33-42f6-bb5d-910a327d3c48"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 10614,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": true,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/results/mochawesome",
+        "quiet": true,
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

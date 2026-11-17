@@ -1,44 +1,49 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../PageObjects/orangehrm/LoginPage';
-import { DashboardPage } from '../../PageObjects/orangehrm/DashboardPage';
-import dotenv from 'dotenv';
-import path from 'path';
+import { test, expect } from '../../fixtures/test-fixtures';
+import { ORANGEHRM_USERS } from '../../utils/test-data-generators';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+test.describe('OrangeHRM Auth Suite @ui', () => {
+  test.describe.configure({ retries: 1 });
 
-test.describe('OrangeHRM Auth Suite', () => {
-    let loginPage: LoginPage;
-    let dashboardPage: DashboardPage;
+  test.beforeEach(async ({ orangeHrmLoginPage }) => {
+    await orangeHrmLoginPage.goto();
+  });
 
-    test.beforeEach(async ({ page }) => {
-        loginPage = new LoginPage(page);
-        dashboardPage = new DashboardPage(page);
-        await loginPage.goto();
-    });
+  test('Successful Login @smoke', async ({ orangeHrmLoginPage, orangeHrmDashboardPage }) => {
+    const credentials = ORANGEHRM_USERS.admin;
+    await orangeHrmLoginPage.login(credentials.username, credentials.password);
+    await orangeHrmDashboardPage.verifyLoaded();
+  });
 
-    test('Successful Login', async () => {
-        await loginPage.login(process.env.ORANGEHRM_USERNAME!, process.env.ORANGEHRM_PASSWORD!);
-        await dashboardPage.verifyLoaded();
-    });
+  test('Invalid Login - Wrong Password @negative', async ({ orangeHrmLoginPage }) => {
+    await orangeHrmLoginPage.login(ORANGEHRM_USERS.admin.username, 'WrongPassword123');
+    await orangeHrmLoginPage.verifyErrorMessage();
+  });
 
-    test('Invalid Login - Wrong Password', async () => {
-        await loginPage.login(process.env.ORANGEHRM_USERNAME!, 'WrongPassword123');
-        await loginPage.verifyErrorMessage();
-    });
+  test('Invalid Login - Non-existent User @negative', async ({ orangeHrmLoginPage }) => {
+    await orangeHrmLoginPage.login('NonExistentUser', 'admin123');
+    await orangeHrmLoginPage.verifyErrorMessage();
+  });
 
-    test('Invalid Login - Non-existent User', async () => {
-        await loginPage.login('NonExistentUser', 'admin123');
-        await loginPage.verifyErrorMessage();
-    });
+  test('Empty Credentials Login @negative', async ({ orangeHrmLoginPage }) => {
+    await orangeHrmLoginPage.login('', '');
+    await orangeHrmLoginPage.verifyErrorMessage();
+  });
 
-    test('Empty Credentials Login', async () => {
-        await loginPage.login('', '');
-        await loginPage.verifyErrorMessage();
-    });
+  test('Logout Process @smoke @e2e', async ({ orangeHrmLoginPage, orangeHrmDashboardPage, page }) => {
+    await orangeHrmLoginPage.login(ORANGEHRM_USERS.admin.username, ORANGEHRM_USERS.admin.password);
+    await orangeHrmDashboardPage.verifyLoaded();
+    await orangeHrmDashboardPage.logout();
+    await expect(page).toHaveURL(/.*auth\/login/);
+  });
 
-    test('Logout Process', async () => {
-        await loginPage.login(process.env.ORANGEHRM_USERNAME!, process.env.ORANGEHRM_PASSWORD!);
-        await dashboardPage.logout();
-        await expect(loginPage.page).toHaveURL(/.*auth\/login/);
-    });
+  test('Verify login page elements @ui', async ({ orangeHrmLoginPage }) => {
+    await orangeHrmLoginPage.verifyPageElements();
+  });
+
+  test('Login with credentials from env @smoke', async ({ orangeHrmLoginPage, orangeHrmDashboardPage }) => {
+    const username = process.env.ORANGEHRM_USERNAME!;
+    const password = process.env.ORANGEHRM_PASSWORD!;
+    await orangeHrmLoginPage.login(username, password);
+    await orangeHrmDashboardPage.verifyLoaded();
+  });
 });

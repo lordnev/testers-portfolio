@@ -1,33 +1,51 @@
 export class CheckoutPage {
-    get firstNameInput() { return cy.get('[data-test="firstName"]'); }
-    get lastNameInput() { return cy.get('[data-test="lastName"]'); }
-    get zipCodeInput() { return cy.get('[data-test="postalCode"]'); }
-    get continueButton() { return cy.get('[data-test="continue"]'); }
-    get finishButton() { return cy.get('[data-test="finish"]'); }
-    get completeHeader() { return cy.get('.complete-header'); }
-    get downloadInvoiceButton() { return cy.get('[data-test="download-invoice"]'); }
+  private readonly selectors = {
+    firstName: '[data-test="firstName"]',
+    lastName: '[data-test="lastName"]',
+    postalCode: '[data-test="postalCode"]',
+    continueButton: '[data-test="continue"]',
+    finishButton: '[data-test="finish"]',
+    completeHeader: '.complete-header',
+    downloadInvoice: '[data-test="download-invoice"]',
+    errorMessage: '[data-test="error"]',
+  } as const;
 
-    fillCheckoutInformation(userData) {
-        this.firstNameInput.type(userData.firstName);
-        this.lastNameInput.type(userData.lastName);
-        this.zipCodeInput.type(userData.zipCode);
-    }
+  get firstNameInput() { return cy.get(this.selectors.firstName); }
+  get lastNameInput() { return cy.get(this.selectors.lastName); }
+  get postalCodeInput() { return cy.get(this.selectors.postalCode); }
+  get continueButton() { return cy.get(this.selectors.continueButton); }
+  get finishButton() { return cy.get(this.selectors.finishButton); }
+  get completeHeader() { return cy.get(this.selectors.completeHeader); }
+  get downloadInvoiceButton() { return cy.get(this.selectors.downloadInvoice); }
+  get errorMessage() { return cy.get(this.selectors.errorMessage); }
 
-    continueToOverview() {
-        this.continueButton.click();
-    }
+  fillCheckoutInformation(userData: { firstName: string; lastName: string; zipCode: string }): void {
+    this.firstNameInput.clear().type(userData.firstName);
+    this.lastNameInput.clear().type(userData.lastName);
+    this.postalCodeInput.clear().type(userData.zipCode);
+  }
 
-    finishPurchase() {
-        this.finishButton.click();
-    }
+  continueToOverview(): void {
+    this.continueButton.click();
+    cy.waitForNetworkIdle();
+  }
 
-    getCompletionMessage() {
-        return this.completeHeader.invoke('text');
-    }
+  finishPurchase(): void {
+    this.finishButton.click();
+    cy.waitForNetworkIdle();
+  }
 
-    downloadInvoice() {
-        this.downloadInvoiceButton.click();
-    }
+  getCompletionMessage(): Cypress.Chainable<string> {
+    return this.completeHeader.invoke('text');
+  }
+
+  downloadInvoice(): void {
+    this.downloadInvoiceButton.click();
+  }
+
+  expectErrorMessage(message: string): void {
+    this.errorMessage.should('be.visible').and('contain', message);
+  }
 }
 
 export const checkoutPage = new CheckoutPage();

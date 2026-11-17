@@ -1,0 +1,221 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+    inputs:
+      testType:
+        description: 'Test type to run'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - smoke
+          - regression
+          - api
+          - e2e
+
+env:
+  NODE_VERSION: '20'
+  CI: true
+
+jobs:
+  playwright:
+    name: Playwright Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: Playwright/package-lock.json
+
+      - name: Install Playwright dependencies
+        run: npm ci
+        working-directory: ./Playwright
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+        working-directory: ./Playwright
+
+      - name: Run Playwright tests
+        run: |
+          if [ "${{ github.event.inputs.testType }}" = "smoke" ]; then
+            npm run test:smoke
+          elif [ "${{ github.event.inputs.testType }}" = "regression" ]; then
+            npm run test:regression
+          elif [ "${{ github.event.inputs.testType }}" = "api" ]; then
+            npm run test:api
+          elif [ "${{ github.event.inputs.testType }}" = "e2e" ]; then
+            npm run test:e2e
+          else
+            npm run test:ci
+          fi
+        working-directory: ./Playwright
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          ORANGEHRM_URL: ${{ secrets.ORANGEHRM_URL }}
+          ORANGEHRM_USERNAME: ${{ secrets.ORANGEHRM_USERNAME }}
+          ORANGEHRM_PASSWORD: ${{ secrets.ORANGEHRM_PASSWORD }}
+          REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }}
+          REQRES_LOGIN: ${{ secrets.REQRES_LOGIN }}
+          REQRES_PASSWORD: ${{ secrets.REQRES_PASSWORD }}
+
+      - name: Upload Playwright HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: Playwright/playwright-report/
+          retention-days: 7
+
+      - name: Upload Playwright test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: Playwright/test-results/
+          retention-days: 7
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-allure-results
+          path: Playwright/allure-results/
+          retention-days: 7
+
+  cypress:
+    name: Cypress Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: Cypress/package-lock.json
+
+      - name: Install Cypress dependencies
+        run: npm ci
+        working-directory: ./Cypress
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: ./Cypress
+          build: npm run build
+          record: false
+          tag: ${{ github.event.inputs.testType || 'all' }}
+          env:
+            CYPRESS_BASE_URL: ${{ secrets.CYPRESS_BASE_URL }}
+            ORANGEHRM_URL: ${{ secrets.ORANGEHRM_URL }}
+            ORANGEHRM_USERNAME: ${{ secrets.ORANGEHRM_USERNAME }}
+            ORANGEHRM_PASSWORD: ${{ secrets.ORANGEHRM_PASSWORD }}
+            REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }}
+            REQRES_LOGIN: ${{ secrets.REQRES_LOGIN }}
+            REQRES_PASSWORD: ${{ secrets.REQRES_PASSWORD }}
+        env:
+          CYPRESS_BASE_URL: ${{ secrets.CYPRESS_BASE_URL }}
+          ORANGEHRM_URL: ${{ secrets.ORANGEHRM_URL }}
+          ORANGEHRM_USERNAME: ${{ secrets.ORANGEHRM_USERNAME }}
+          ORANGEHRM_PASSWORD: ${{ secrets.ORANGEHRM_PASSWORD }}
+          REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }}
+          REQRES_LOGIN: ${{ secrets.REQRES_LOGIN }}
+          REQRES_PASSWORD: ${{ secrets.REQRES_PASSWORD }}
+
+      - name: Upload Cypress screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: Cypress/cypress/screenshots/
+          retention-days: 7
+
+      - name: Upload Cypress videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: Cypress/cypress/videos/
+          retention-days: 7
+
+      - name: Upload Cypress results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-results
+          path: Cypress/cypress/results/
+          retention-days: 7
+
+  allure-report:
+    name: Generate Allure Report
+    needs: [playwright, cypress]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Playwright Allure results
+        uses: actions/download-artifact@v4
+        with:
+          name: playwright-allure-results
+          path: allure-results/playwright
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline
+
+      - name: Generate Allure Report
+        run: |
+          allure generate allure-results/playwright -o allure-report --clean
+        continue-on-error: true
+
+      - name: Upload Allure Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
+          retention-days: 7
+
+  summary:
+    name: Test Summary
+    needs: [playwright, cypress, allure-report]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print test summary
+        run: |
+          echo "## Test Suite Summary"
+          echo ""
+          echo "### Playwright Tests"
+          echo "- Status: ${{ needs.playwright.result }}"
+          echo ""
+          echo "### Cypress Tests"
+          echo "- Status: ${{ needs.cypress.result }}"
+          echo ""
+          echo "### Allure Report"
+          echo "- Status: ${{ needs.allure-report.result }}"
+          echo ""
+          echo "Artifacts available for download from the workflow run."

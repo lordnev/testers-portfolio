@@ -1,51 +1,43 @@
-import { test, expect } from '@playwright/test';
-import fs from 'fs';
-import path from 'path';
+import { test, expect } from '../../fixtures/test-fixtures';
+import { JsonPlaceholderClient } from '../../utils/api-helpers';
 
-async function savePreview(name: string, data: any) {
-  const date = new Date().toISOString().split('T')[0];
-  const fileName = `${name}-preview-${date}.md`;
+test.describe('JSONPlaceholder Filtering & Nested Routes @api', () => {
+  let jsonPlaceholderClient: JsonPlaceholderClient;
 
-  // Using process.cwd() to ensure we are relative to the project root
-  const dirPath = path.join(process.cwd(), 'Playwright', 'test-data');
-  const filePath = path.join(dirPath, fileName);
-
-  try {
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath, { recursive: true });
-    }
-    const content = `# ${name} API Test Data Preview\nDate: ${date}\n\n\`\`\`json\n${JSON.stringify(data, null, 2)}\n\`\`\``;
-    fs.writeFileSync(filePath, content);
-  } catch (error) {
-    console.error(`Failed to save preview to ${filePath}:`, error);
-  }
-}
-
-test.describe('Posts Routing - Filter & Nested', () => {
-  const baseUrl = 'https://jsonplaceholder.typicode.com';
-
-  test('GET /comments?postId=1 - should filter comments by postId', async ({ request }) => {
-    const response = await request.get(`${baseUrl}/comments`, {
-      params: { postId: 1 }
-    });
-    expect(response.ok()).toBeTruthy();
-    const body = await response.json();
-    expect(Array.isArray(body)).toBeTruthy();
-    body.forEach(comment => {
-      expect(comment.postId).toBe(1);
-    });
-    await savePreview('jsonplaceholder-filtered-comments', body.slice(0, 2));
+  test.beforeEach(async ({ request }) => {
+    jsonPlaceholderClient = new JsonPlaceholderClient(request);
   });
 
-  test('GET /posts/1/comments - should return comments for a specific post (Nested)', async ({ request }) => {
-    const response = await request.get(`${baseUrl}/posts/1/comments`);
-    expect(response.ok()).toBeTruthy();
-    const body = await response.json();
-    expect(Array.isArray(body)).toBeTruthy();
-    expect(body.length).toBeGreaterThan(0);
-    body.forEach(comment => {
+  test('GET /comments?postId=1 - should filter comments by postId @smoke', async () => {
+    const comments = await jsonPlaceholderClient.getComments(1);
+    expect(Array.isArray(comments)).toBeTruthy();
+    expect(comments.length).toBeGreaterThan(0);
+    comments.forEach(comment => {
       expect(comment.postId).toBe(1);
     });
-    await savePreview('jsonplaceholder-nested-comments', body.slice(0, 2));
+  });
+
+  test('GET /posts/1/comments - should return comments for a specific post (Nested) @smoke', async () => {
+    const comments = await jsonPlaceholderClient.getNestedComments(1);
+    expect(Array.isArray(comments)).toBeTruthy();
+    expect(comments.length).toBeGreaterThan(0);
+    comments.forEach(comment => {
+      expect(comment.postId).toBe(1);
+    });
+  });
+
+  test('GET /posts/1/comments - should match filtered comments @regression', async () => {
+    const [filteredComments, nestedComments] = await Promise.all([
+      jsonPlaceholderClient.getComments(1),
+      jsonPlaceholderClient.getNestedComments(1),
+    ]);
+    expect(filteredComments.length).toBe(nestedComments.length);
+    expect(filteredComments.map(c => c.id).sort()).toEqual(nestedComments.map(c => c.id).sort());
+  });
+
+  test('GET /comments?postId=999 - should return empty array for non-existent post @negative', async () => {
+    const comments = await jsonPlaceholderClient.getComments(999);
+    expect(Array.isArray(comments)).toBeTruthy();
+    expect(comments.length).toBe(0);
   });
 });

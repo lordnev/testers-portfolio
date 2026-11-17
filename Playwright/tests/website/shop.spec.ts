@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { test, expect } from '../../fixtures/test-fixtures';
 import { HomePage } from '../../PageObjects/website/HomePage';
 import { LoginPage } from '../../PageObjects/website/LoginPage';
 import { ShopPage } from '../../PageObjects/website/ShopPage';
@@ -6,43 +6,40 @@ import { ProductPage } from '../../PageObjects/website/ProductPage';
 import { CheckoutPage } from '../../PageObjects/website/CheckoutPage';
 import { ConsoleLog } from '../../PageObjects/website/ConsoleLog';
 
-test.describe('Shop Tests - Testers Portfolio', () => {
-  let homePage: HomePage;
-  let loginPage: LoginPage;
-  let shopPage: ShopPage;
-  let productPage: ProductPage;
-  let checkoutPage: CheckoutPage;
-  let consoleLog: ConsoleLog;
+test.describe('Shop Tests - Testers Portfolio @ui', () => {
+  test.describe.configure({ retries: 1 });
 
-  test.beforeEach(async ({ page }) => {
-    homePage = new HomePage(page);
-    loginPage = new LoginPage(page);
-    shopPage = new ShopPage(page);
-    productPage = new ProductPage(page);
-    checkoutPage = new CheckoutPage(page);
-    consoleLog = new ConsoleLog(page);
+  test.beforeEach(async ({ homePage, loginPage, shopPage, productPage, checkoutPage, consoleLog }) => {
+    // Initialize page objects
+    // Already available via fixtures
   });
 
-  test('Verification of key subpages presence (Terms, Policy, Contact)', async () => {
+  test('Verification of key subpages presence (Terms, Policy, Contact) @smoke', async ({ homePage }) => {
     await homePage.goto();
     await homePage.checkRegulaminExists();
     await homePage.checkPolitykaPrywatnosciExists();
     await homePage.checkKontaktExists();
   });
 
-  test('Login to WP Admin panel - login form availability', async ({ page }) => {
+  test('Login to WP Admin panel - login form availability @smoke', async ({ loginPage, page }) => {
     await loginPage.goto();
     await loginPage.checkLoginFieldsVisible();
     await loginPage.login();
     await expect(page.getByRole('heading', { name: 'Moje konto' })).toBeVisible();
   });
 
-  test('Verification of product visibility in the store', async () => {
+  test('Verification of product visibility in the store @smoke', async ({ shopPage }) => {
     await shopPage.goto();
     await shopPage.checkProductsVisible();
   });
 
-  test.only('Order Wi-Fi headphones with traditional transfer and slingshot delivery', async () => {
+  test('Order Wi-Fi headphones with traditional transfer and slingshot delivery @e2e', async ({
+    homePage,
+    shopPage,
+    productPage,
+    checkoutPage,
+    consoleLog,
+  }) => {
     await homePage.goto();
     await homePage.goToShop();
     await shopPage.selectProduct('Hi-Fi Headphones');
@@ -58,6 +55,23 @@ test.describe('Shop Tests - Testers Portfolio', () => {
     await checkoutPage.orderSummary(details.email);
 
     consoleLog.logOrderDetails(details);
+  });
 
+  test('Verify cart functionality @regression', async ({ shopPage, productPage, page }) => {
+    await shopPage.goto();
+    await shopPage.selectProduct('Hi-Fi Headphones');
+    await productPage.addProductToCart();
+
+    await productPage.goToCart();
+    await expect(page.locator('.cart_item')).toBeVisible();
+  });
+
+  test('Verify product details page @regression', async ({ shopPage, productPage, page }) => {
+    await shopPage.goto();
+    await shopPage.selectProduct('Hi-Fi Headphones');
+
+    await expect(productPage.productTitle).toBeVisible();
+    await expect(productPage.productPrice).toBeVisible();
+    await expect(productPage.addToCartButton).toBeEnabled();
   });
 });

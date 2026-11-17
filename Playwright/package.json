@@ -1,15 +1,41 @@
 {
   "name": "playwright",
   "version": "1.0.0",
-  "description": "",
+  "description": "Professional Playwright test suite for testers-portfolio",
   "main": "index.js",
-  "scripts": {},
-  "keywords": [],
   "type": "commonjs",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:e2e": "playwright test --grep @e2e",
+    "test:api": "playwright test --grep @api",
+    "test:ci": "playwright test --reporter=line,html,junit",
+    "report": "playwright show-report",
+    "report:allure": "allure serve allure-results",
+    "install:browsers": "playwright install --with-deps",
+    "lint": "eslint . --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "e2e",
+    "automation"
+  ],
+  "author": "Bartłomiej",
+  "license": "MIT",
   "devDependencies": {
     "@faker-js/faker": "^10.5.0",
     "@playwright/test": "^1.62.0",
-    "@types/node": "^26.1.2"
+    "@types/node": "^26.1.2",
+    "allure-playwright": "^3.2.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^9.0.0",
+    "typescript": "^5.0.0"
   },
   "dependencies": {
     "dotenv": "^17.4.2"

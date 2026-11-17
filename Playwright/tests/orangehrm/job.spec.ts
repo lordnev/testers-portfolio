@@ -1,43 +1,46 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../PageObjects/orangehrm/LoginPage';
-import { DashboardPage } from '../../PageObjects/orangehrm/DashboardPage';
-import { JobPage } from '../../PageObjects/orangehrm/JobPage';
-import dotenv from 'dotenv';
-import path from 'path';
+import { test, expect } from '../../fixtures/test-fixtures';
+import { generateJobVacancyData } from '../../utils/test-data-generators';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+test.describe('OrangeHRM Job Suite @ui', () => {
+  test.describe.configure({ retries: 1 });
 
-test.describe('OrangeHRM Job Suite', () => {
-    let loginPage: LoginPage;
-    let dashboardPage: DashboardPage;
-    let jobPage: JobPage;
+  test.beforeEach(async ({ orangeHrmAuthenticatedPage, orangeHrmDashboardPage }) => {
+    await orangeHrmDashboardPage.navigateToAdmin();
+    await orangeHrmAuthenticatedPage.goto('**/admin/viewJobTitles');
+  });
 
-    test.beforeEach(async ({ page }) => {
-        loginPage = new LoginPage(page);
-        dashboardPage = new DashboardPage(page);
-        jobPage = new JobPage(page);
+  test('Job Vacancy List Load @smoke', async ({ page }) => {
+    await expect(page.locator('.oxd-table-card')).toBeVisible();
+  });
 
-        await loginPage.goto();
-        await loginPage.login(process.env.ORANGEHRM_USERNAME!, process.env.ORANGEHRM_PASSWORD!);
-        await page.goto('**/admin/viewJobTitles');
-    });
+  test('Add Job Vacancy @smoke @e2e', async ({ page }) => {
+    const jobData = generateJobVacancyData();
 
-    test('Job Vacancy List Load', async () => {
-        await expect(jobPage.jobTable).toBeVisible();
-    });
+    await page.getByRole('button', { name: 'Add' }).click();
+    await page.getByPlaceholder('Job Title').fill(jobData.title);
+    await page.getByPlaceholder('Description').fill(jobData.description);
+    await page.getByRole('button', { name: 'Save' }).click();
 
-    test('Add Job Vacancy', async () => {
-        await jobPage.addJobVacancy('QA Automation Engineer', 'Experience with Playwright');
-        await expect(jobPage.jobTable).toBeVisible();
-    });
+    await expect(page.locator('.oxd-table-card')).toBeVisible({ timeout: 10000 });
+  });
 
-    test('Job Search', async ({ page }) => {
-        await page.locator('input[placeholder="Job Title"]').fill('QA');
-        await page.locator('button[type="submit"]').click();
-        await expect(jobPage.jobTable).toBeVisible();
-    });
+  test('Job Search @regression', async ({ page }) => {
+    await page.getByPlaceholder('Job Title').fill('QA');
+    await page.getByRole('button', { name: 'Search' }).click();
+    await expect(page.locator('.oxd-table-card')).toBeVisible();
+  });
 
-    test('Job Description Verification', async () => {
-        await jobPage.verifyJobExists('QA Automation Engineer');
-    });
+  test('Job Description Verification @regression', async ({ page }) => {
+    await expect(page.getByText('QA Automation Engineer')).toBeVisible();
+  });
+
+  test('Edit Job Title @regression', async ({ page }) => {
+    await page.getByPlaceholder('Job Title').fill('QA');
+    await page.getByRole('button', { name: 'Search' }).click();
+    await page.getByText('QA Automation Engineer').first().click();
+    await page.getByPlaceholder('Job Title').clear();
+    await page.getByPlaceholder('Job Title').fill('Senior QA Automation Engineer');
+    await page.getByRole('button', { name: 'Save' }).click();
+    await expect(page.locator('.oxd-toast--success')).toBeVisible({ timeout: 10000 });
+  });
 });

@@ -1,85 +1,66 @@
-import { test, expect } from '@playwright/test';
-import fs from 'fs';
-import path from 'path';
+import { test, expect } from '../../fixtures/test-fixtures';
+import { JsonPlaceholderClient } from '../../utils/api-helpers';
+import { API_TEST_DATA } from '../../utils/test-data-generators';
 
-async function savePreview(name: string, data: any) {
-  const date = new Date().toISOString().split('T')[0];
-  const fileName = `${name}-preview-${date}.md`;
+test.describe('JSONPlaceholder Posts API @api', () => {
+  let jsonPlaceholderClient: JsonPlaceholderClient;
 
-  // Fixed path: move up from tests/api-jasonplaceholder to tests, then to test-data
-  const dirPath = path.join(process.cwd(), 'Playwright', 'test-data');
-  const filePath = path.join(dirPath, fileName);
-
-  // Ensure directory exists
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-  }
-
-  const content = `# ${name} API Test Data Preview\nDate: ${date}\n\n\`\`\`json\n${JSON.stringify(data, null, 2)}\n\`\`\``;
-
-  fs.writeFileSync(filePath, content);
-}
-
-test.describe('Posts Resource', () => {
-  const baseUrl = 'https://jsonplaceholder.typicode.com';
-
-  test('GET /posts - should list posts', async ({ request }) => {
-    const response = await request.get(`${baseUrl}/posts`);
-    expect(response.ok()).toBeTruthy();
-    const body = await response.json();
-    expect(Array.isArray(body)).toBeTruthy();
-    expect(body.length).toBe(100);
-    await savePreview('jsonplaceholder-posts', body.slice(0, 2));
+  test.beforeEach(async ({ request }) => {
+    jsonPlaceholderClient = new JsonPlaceholderClient(request);
   });
 
-  test('GET /posts/1 - should return a single post', async ({ request }) => {
-    const response = await request.get(`${baseUrl}/posts/1`);
-    expect(response.ok()).toBeTruthy();
-    const body = await response.json();
-    expect(body.id).toBe(1);
-    await savePreview('jsonplaceholder-single-post', body);
+  test('GET /posts - should list all posts @smoke', async () => {
+    const posts = await jsonPlaceholderClient.getPosts();
+    expect(Array.isArray(posts)).toBeTruthy();
+    expect(posts.length).toBe(100);
+    expect(posts[0]).toHaveProperty('id');
+    expect(posts[0]).toHaveProperty('title');
+    expect(posts[0]).toHaveProperty('body');
+    expect(posts[0]).toHaveProperty('userId');
   });
 
-  test('POST /posts - should create a new post', async ({ request }) => {
-    const response = await request.post(`${baseUrl}/posts`, {
-      data: {
-        title: 'Playwright Test Post',
-        body: 'This is a test body',
-        userId: 1
-      }
+  test('GET /posts/1 - should return a single post @smoke', async () => {
+    const post = await jsonPlaceholderClient.getPost(1);
+    expect(post.id).toBe(1);
+    expect(post.title).toBeDefined();
+    expect(post.body).toBeDefined();
+    expect(post.userId).toBeDefined();
+  });
+
+  test('POST /posts - should create a new post @smoke', async () => {
+    const newPost = await jsonPlaceholderClient.createPost(API_TEST_DATA.jsonPlaceholder.post);
+    expect(newPost.id).toBeDefined();
+    expect(newPost.title).toBe(API_TEST_DATA.jsonPlaceholder.post.title);
+    expect(newPost.body).toBe(API_TEST_DATA.jsonPlaceholder.post.body);
+    expect(newPost.userId).toBe(API_TEST_DATA.jsonPlaceholder.post.userId);
+  });
+
+  test('PUT /posts/1 - should update a post entirely @regression', async () => {
+    const updatedPost = await jsonPlaceholderClient.updatePost(1, {
+      id: 1,
+      ...API_TEST_DATA.jsonPlaceholder.updatedPost,
     });
-    expect(response.status()).toBe(201);
-    const body = await response.json();
-    await savePreview('jsonplaceholder-created-post', body);
+    expect(updatedPost.id).toBe(1);
+    expect(updatedPost.title).toBe(API_TEST_DATA.jsonPlaceholder.updatedPost.title);
+    expect(updatedPost.body).toBe(API_TEST_DATA.jsonPlaceholder.updatedPost.body);
   });
 
-  test('PUT /posts/1 - should update a post entirely', async ({ request }) => {
-    const response = await request.put(`${baseUrl}/posts/1`, {
-      data: {
-        id: 1,
-        title: 'Updated Title',
-        body: 'Updated Body',
-        userId: 1
-      }
+  test('PATCH /posts/1 - should partially update a post @regression', async () => {
+    const patchedPost = await jsonPlaceholderClient.patchPost(1, {
+      title: 'Partially Updated Title',
     });
-    expect(response.ok()).toBeTruthy();
-    const body = await response.json();
-    await savePreview('jsonplaceholder-updated-post', body);
+    expect(patchedPost.id).toBe(1);
+    expect(patchedPost.title).toBe('Partially Updated Title');
+    // body should remain unchanged
+    expect(patchedPost.body).toBeDefined();
   });
 
-  test('PATCH /posts/1 - should partially update a post', async ({ request }) => {
-    const response = await request.patch(`${baseUrl}/posts/1`, {
-      data: {
-        title: 'Partially Updated Title'
-      }
-    });
-    expect(response.ok()).toBeTruthy();
-    const body = await response.json();
-    await savePreview('jsonplaceholder-patched-post', body);
+  test('DELETE /posts/1 - should delete a post @regression', async () => {
+    await expect(jsonPlaceholderClient.deletePost(1)).resolves.toBeUndefined();
   });
 
-  test('DELETE /posts/1 - should delete a post', async ({ request }) => {
-    const response = await request.delete(`${baseUrl}/posts/1`);
-    expect(response.status()).toBe(200);
+  test('GET /posts with pagination simulation @regression', async () => {
+    const posts = await jsonPlaceholderClient.getPosts({ _limit: '10', _page: '2' });
+    expect(posts.length).toBeLessThanOrEqual(10);
   });
 });

@@ -1,0 +1,334 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 11,
+    "passes": 2,
+    "pending": 0,
+    "failures": 9,
+    "start": "2026-11-17T20:15:20.073Z",
+    "end": "2026-11-17T20:25:08.112Z",
+    "duration": 588039,
+    "testsRegistered": 11,
+    "passPercent": 18.181818181818183,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "4330e9de-7b3b-47fd-8a21-2290cda366aa",
+      "title": "",
+      "fullFile": "cypress\\e2e\\swag-labs\\login.cy.ts",
+      "file": "cypress\\e2e\\swag-labs\\login.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "9b499d35-a504-4ce6-bc7a-55ccdf5e0837",
+          "title": "Swag Labs Login Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Login with Standard user (standard_user)",
+              "fullTitle": "Swag Labs Login Tests Login with Standard user (standard_user)",
+              "timedOut": null,
+              "duration": 5529,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login(username, password);\nif (expectsSuccess) {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectSuccess();\n}\nelse {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Sorry, this user has been locked out.');\n}",
+              "err": {},
+              "uuid": "036c5065-dc06-407a-b98a-176e6ccb1301",
+              "parentUUID": "9b499d35-a504-4ce6-bc7a-55ccdf5e0837",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with Locked out user (locked_out_user)",
+              "fullTitle": "Swag Labs Login Tests Login with Locked out user (locked_out_user)",
+              "timedOut": null,
+              "duration": 22099,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login(username, password);\nif (expectsSuccess) {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectSuccess();\n}\nelse {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Sorry, this user has been locked out.');\n}",
+              "err": {
+                "message": "CypressError: Timed out retrying after 9000ms: `cy.wait()` timed out waiting `9000ms` for the 3rd response to the route: `requests`. No response ever occurred.\n\nhttps://on.cypress.io/wait",
+                "estack": "CypressError: Timed out retrying after 9000ms: `cy.wait()` timed out waiting `9000ms` for the 3rd response to the route: `requests`. No response ever occurred.\n\nhttps://on.cypress.io/wait\n    at cypressErr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75859:18)\n    at Object.errByPath (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75917:10)\n    at checkForXhr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140715:84)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140740:28)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise.attempt.Promise.try (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4288:29)\n    at whenStable (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155397:70)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155297:14)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)\n    at Promise._settlePromise (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1549:18)\n    at Promise._settlePromise0 (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1594:10)\n    at Promise._settlePromises (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1674:18)\n    at Promise._fulfill (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1618:18)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:5423:46)",
+                "diff": null
+              },
+              "uuid": "9f097710-a2eb-4015-ac6f-412f509361b8",
+              "parentUUID": "9b499d35-a504-4ce6-bc7a-55ccdf5e0837",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with Problem user (problem_user)",
+              "fullTitle": "Swag Labs Login Tests Login with Problem user (problem_user)",
+              "timedOut": null,
+              "duration": 28040,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login(username, password);\nif (expectsSuccess) {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectSuccess();\n}\nelse {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Sorry, this user has been locked out.');\n}",
+              "err": {
+                "message": "CypressError: Timed out retrying after 7500ms: `cy.wait()` timed out waiting `7500ms` for the 6th request to the route: `requests`. No request ever occurred.\n\nhttps://on.cypress.io/wait",
+                "estack": "CypressError: Timed out retrying after 7500ms: `cy.wait()` timed out waiting `7500ms` for the 6th request to the route: `requests`. No request ever occurred.\n\nhttps://on.cypress.io/wait\n    at cypressErr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75859:18)\n    at Object.errByPath (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75917:10)\n    at checkForXhr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140715:84)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140740:28)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise.attempt.Promise.try (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4288:29)\n    at whenStable (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155397:70)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155297:14)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)\n    at Promise._settlePromise (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1549:18)\n    at Promise._settlePromise0 (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1594:10)\n    at Promise._settlePromises (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1674:18)\n    at Promise._fulfill (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1618:18)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:5423:46)",
+                "diff": null
+              },
+              "uuid": "4b67007a-fee7-4724-8205-bb4022e3d31c",
+              "parentUUID": "9b499d35-a504-4ce6-bc7a-55ccdf5e0837",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with Performance glitch user (performance_glitch_user)",
+              "fullTitle": "Swag Labs Login Tests Login with Performance glitch user (performance_glitch_user)",
+              "timedOut": null,
+              "duration": 19979,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login(username, password);\nif (expectsSuccess) {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectSuccess();\n}\nelse {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Sorry, this user has been locked out.');\n}",
+              "err": {
+                "message": "CypressError: Timed out retrying after 10000ms: `cy.wait()` timed out waiting `10000ms` for the 1st request to the route: `requests`. No request ever occurred.\n\nhttps://on.cypress.io/wait",
+                "estack": "CypressError: Timed out retrying after 10000ms: `cy.wait()` timed out waiting `10000ms` for the 1st request to the route: `requests`. No request ever occurred.\n\nhttps://on.cypress.io/wait\n    at cypressErr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75859:18)\n    at Object.errByPath (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75917:10)\n    at checkForXhr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140715:84)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140740:28)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise.attempt.Promise.try (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4288:29)\n    at whenStable (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155397:70)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155297:14)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)\n    at Promise._settlePromise (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1549:18)\n    at Promise._settlePromise0 (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1594:10)\n    at Promise._settlePromises (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1674:18)\n    at Promise._fulfill (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1618:18)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:5423:46)",
+                "diff": null
+              },
+              "uuid": "d4d9ebdf-7604-43d7-b5ac-2fe7b460b649",
+              "parentUUID": "9b499d35-a504-4ce6-bc7a-55ccdf5e0837",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with Error user (error_user)",
+              "fullTitle": "Swag Labs Login Tests Login with Error user (error_user)",
+              "timedOut": null,
+              "duration": 19996,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login(username, password);\nif (expectsSuccess) {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectSuccess();\n}\nelse {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Sorry, this user has been locked out.');\n}",
+              "err": {
+                "message": "CypressError: Timed out retrying after 1500ms: `cy.wait()` timed out waiting `1500ms` for the 18th request to the route: `requests`. No request ever occurred.\n\nhttps://on.cypress.io/wait",
+                "estack": "CypressError: Timed out retrying after 1500ms: `cy.wait()` timed out waiting `1500ms` for the 18th request to the route: `requests`. No request ever occurred.\n\nhttps://on.cypress.io/wait\n    at cypressErr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75859:18)\n    at Object.errByPath (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75917:10)\n    at checkForXhr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140715:84)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140740:28)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise.attempt.Promise.try (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4288:29)\n    at whenStable (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155397:70)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155297:14)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)\n    at Promise._settlePromise (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1549:18)\n    at Promise._settlePromise0 (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1594:10)\n    at Promise._settlePromises (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1674:18)\n    at Promise._fulfill (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1618:18)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:5423:46)",
+                "diff": null
+              },
+              "uuid": "a622c9da-93bb-4b9c-93f1-430a925fe6d7",
+              "parentUUID": "9b499d35-a504-4ce6-bc7a-55ccdf5e0837",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with Visual user (visual_user)",
+              "fullTitle": "Swag Labs Login Tests Login with Visual user (visual_user)",
+              "timedOut": null,
+              "duration": 22714,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login(username, password);\nif (expectsSuccess) {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectSuccess();\n}\nelse {\n    _pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Sorry, this user has been locked out.');\n}",
+              "err": {
+                "message": "CypressError: Timed out retrying after 9000ms: `cy.wait()` timed out waiting `9000ms` for the 3rd request to the route: `requests`. No request ever occurred.\n\nhttps://on.cypress.io/wait",
+                "estack": "CypressError: Timed out retrying after 9000ms: `cy.wait()` timed out waiting `9000ms` for the 3rd request to the route: `requests`. No request ever occurred.\n\nhttps://on.cypress.io/wait\n    at cypressErr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75859:18)\n    at Object.errByPath (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75917:10)\n    at checkForXhr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140715:84)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140740:28)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise.attempt.Promise.try (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4288:29)\n    at whenStable (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155397:70)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155297:14)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)\n    at Promise._settlePromise (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1549:18)\n    at Promise._settlePromise0 (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1594:10)\n    at Promise._settlePromises (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1674:18)\n    at Promise._fulfill (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1618:18)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:5423:46)",
+                "diff": null
+              },
+              "uuid": "844d2f33-77a9-47e7-a199-3b645f38d1b8",
+              "parentUUID": "9b499d35-a504-4ce6-bc7a-55ccdf5e0837",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with empty credentials",
+              "fullTitle": "Swag Labs Login Tests Login with empty credentials",
+              "timedOut": null,
+              "duration": 2274,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login('', '');\n_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Username is required');",
+              "err": {
+                "message": "CypressError: `cy.type()` cannot accept an empty string. You need to actually type something.\n\nhttps://on.cypress.io/type",
+                "estack": "CypressError: `cy.type()` cannot accept an empty string. You need to actually type something.\n\nhttps://on.cypress.io/type\n    at Context.type (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:115916:68)\n    at wrapped (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:149556:19)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155677:15)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)\n    at Promise._settlePromise (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1549:18)\n    at Promise._settlePromiseCtx (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1586:10)\n    at _drainQueueStep (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:2384:12)\n    at _drainQueue (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:2373:9)\n    at Async._drainQueues (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:2389:5)\n    at Async.drainQueues (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:2259:14)",
+                "diff": null
+              },
+              "uuid": "865f84d9-e4d7-4ed0-9ed8-aab5c27e75e8",
+              "parentUUID": "9b499d35-a504-4ce6-bc7a-55ccdf5e0837",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Login with invalid password",
+              "fullTitle": "Swag Labs Login Tests Login with invalid password",
+              "timedOut": null,
+              "duration": 31683,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login('standard_user', 'wrong_password');\n_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.expectErrorMessage('Epic sadface: Username and password do not match');",
+              "err": {
+                "message": "CypressError: Timed out retrying after 9000ms: `cy.wait()` timed out waiting `9000ms` for the 3rd response to the route: `requests`. No response ever occurred.\n\nhttps://on.cypress.io/wait",
+                "estack": "CypressError: Timed out retrying after 9000ms: `cy.wait()` timed out waiting `9000ms` for the 3rd response to the route: `requests`. No response ever occurred.\n\nhttps://on.cypress.io/wait\n    at cypressErr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75859:18)\n    at Object.errByPath (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75917:10)\n    at checkForXhr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140715:84)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140740:28)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise.attempt.Promise.try (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4288:29)\n    at whenStable (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155397:70)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155297:14)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)\n    at Promise._settlePromise (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1549:18)\n    at Promise._settlePromise0 (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1594:10)\n    at Promise._settlePromises (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1674:18)\n    at Promise._fulfill (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1618:18)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:5423:46)",
+                "diff": null
+              },
+              "uuid": "2ad2118d-d2d8-44ef-8613-d77b15ce32ff",
+              "parentUUID": "9b499d35-a504-4ce6-bc7a-55ccdf5e0837",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Verify error message visibility",
+              "fullTitle": "Swag Labs Login Tests Verify error message visibility",
+              "timedOut": null,
+              "duration": 22118,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login('invalid', 'invalid');\n_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.errorContainer.should('be.visible');",
+              "err": {
+                "message": "CypressError: Timed out retrying after 9000ms: `cy.wait()` timed out waiting `9000ms` for the 3rd response to the route: `requests`. No response ever occurred.\n\nhttps://on.cypress.io/wait",
+                "estack": "CypressError: Timed out retrying after 9000ms: `cy.wait()` timed out waiting `9000ms` for the 3rd response to the route: `requests`. No response ever occurred.\n\nhttps://on.cypress.io/wait\n    at cypressErr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75859:18)\n    at Object.errByPath (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75917:10)\n    at checkForXhr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140715:84)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140740:28)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise.attempt.Promise.try (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4288:29)\n    at whenStable (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155397:70)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155297:14)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)\n    at Promise._settlePromise (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1549:18)\n    at Promise._settlePromise0 (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1594:10)\n    at Promise._settlePromises (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1674:18)\n    at Promise._fulfill (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1618:18)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:5423:46)",
+                "diff": null
+              },
+              "uuid": "25a25d09-9d2b-4bff-91ce-991607714262",
+              "parentUUID": "9b499d35-a504-4ce6-bc7a-55ccdf5e0837",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Clear credentials after failed login",
+              "fullTitle": "Swag Labs Login Tests Clear credentials after failed login",
+              "timedOut": null,
+              "duration": 21253,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.login('invalid', 'invalid');\n_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.clearForm();\n_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.usernameInput.should('have.value', '');\n_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.passwordInput.should('have.value', '');",
+              "err": {
+                "message": "CypressError: Timed out retrying after 9000ms: `cy.wait()` timed out waiting `9000ms` for the 3rd response to the route: `requests`. No response ever occurred.\n\nhttps://on.cypress.io/wait",
+                "estack": "CypressError: Timed out retrying after 9000ms: `cy.wait()` timed out waiting `9000ms` for the 3rd response to the route: `requests`. No response ever occurred.\n\nhttps://on.cypress.io/wait\n    at cypressErr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75859:18)\n    at Object.errByPath (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:75917:10)\n    at checkForXhr (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140715:84)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:140740:28)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise.attempt.Promise.try (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:4288:29)\n    at whenStable (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155397:70)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:155297:14)\n    at tryCatcher (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1780:23)\n    at Promise._settlePromiseFromHandler (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1492:31)\n    at Promise._settlePromise (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1549:18)\n    at Promise._settlePromise0 (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1594:10)\n    at Promise._settlePromises (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1674:18)\n    at Promise._fulfill (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:1618:18)\n    at <unknown> (https://www.saucedemo.com/__cypress/runner/cypress_runner.js:5423:46)",
+                "diff": null
+              },
+              "uuid": "f6ef6a24-f587-4db2-b369-934b6d200f4a",
+              "parentUUID": "9b499d35-a504-4ce6-bc7a-55ccdf5e0837",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Verify login page elements",
+              "fullTitle": "Swag Labs Login Tests Verify login page elements",
+              "timedOut": null,
+              "duration": 1004,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_pages_Swag_Labs_LoginPage__WEBPACK_IMPORTED_MODULE_0__.loginPage.verifyPageElements();",
+              "err": {},
+              "uuid": "69495161-082a-43cc-b647-61bbb876147d",
+              "parentUUID": "9b499d35-a504-4ce6-bc7a-55ccdf5e0837",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "036c5065-dc06-407a-b98a-176e6ccb1301",
+            "69495161-082a-43cc-b647-61bbb876147d"
+          ],
+          "failures": [
+            "9f097710-a2eb-4015-ac6f-412f509361b8",
+            "4b67007a-fee7-4724-8205-bb4022e3d31c",
+            "d4d9ebdf-7604-43d7-b5ac-2fe7b460b649",
+            "a622c9da-93bb-4b9c-93f1-430a925fe6d7",
+            "844d2f33-77a9-47e7-a199-3b645f38d1b8",
+            "865f84d9-e4d7-4ed0-9ed8-aab5c27e75e8",
+            "2ad2118d-d2d8-44ef-8613-d77b15ce32ff",
+            "25a25d09-9d2b-4bff-91ce-991607714262",
+            "f6ef6a24-f587-4db2-b369-934b6d200f4a"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 196689,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": true,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/results/mochawesome",
+        "quiet": true,
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

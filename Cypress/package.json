@@ -1,5 +1,42 @@
 {
+  "name": "cypress",
+  "version": "1.0.0",
+  "description": "Professional Cypress test suite for testers-portfolio",
+  "scripts": {
+    "test": "cypress run",
+    "test:open": "cypress open",
+    "test:smoke": "cypress run --env tags=@smoke",
+    "test:regression": "cypress run --env tags=@regression",
+    "test:e2e": "cypress run --env tags=@e2e",
+    "test:api": "cypress run --env tags=@api",
+    "test:ci": "cypress run --reporter cypress-multi-reporters --reporter-options reporterEnabled=mocha-junit-reporter,mochawesome",
+    "report:open": "npx mochawesome-merge cypress/results/mochawesome/*.json > mochawesome-report.json && npx marge mochawesome-report.json --reportDir cypress/reports",
+    "install:browsers": "cypress install",
+    "lint": "eslint cypress --ext .js,.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "cypress",
+    "testing",
+    "e2e",
+    "automation"
+  ],
+  "author": "Bartłomiej",
+  "license": "MIT",
   "devDependencies": {
-    "cypress": "^15.19.0"
+    "@shelex/cypress-allure-plugin": "^2.41.2",
+    "@types/node": "^26.1.2",
+    "cypress": "^15.19.0",
+    "cypress-multi-reporters": "^2.0.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^9.0.0",
+    "mocha-allure-reporter": "^1.4.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^5.0.0",
+    "mochawesome-report-generator": "^6.2.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }

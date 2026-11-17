@@ -1,52 +1,62 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../fixtures/test-fixtures';
+import { ReqResClient } from '../../utils/api-helpers';
+import { API_TEST_DATA } from '../../utils/test-data-generators';
 
-test.describe('Authentication API', () => {
-  test('POST /api/register - success', async ({ request }) => {
-    // ReqRes note: Only defined users succeed registration in the mock environment
-    // Since we are testing the API response for a generic successful call,
-    // we will use a known valid user if possible, or acknowledge this mock limitation.
-    const response = await request.post('/api/register', {
-      data: {
-        email: 'eve.holt@reqres.in',
-        password: 'cityslicka'
-      }
-    });
-    expect(response.ok()).toBeTruthy();
-    const body = await response.json();
-    expect(body).toHaveProperty('token');
+test.describe('ReqRes Authentication API @api', () => {
+  let reqresClient: ReqResClient;
+
+  test.beforeEach(async ({ request }) => {
+    reqresClient = new ReqResClient(request);
   });
 
-  test('POST /api/register - failure (no password)', async ({ request }) => {
-    const response = await request.post('/api/register', {
-      data: {
-        email: process.env.REQRES_LOGIN
-      }
-    });
-    expect(response.status()).toBe(400);
-    const body = await response.json();
-    expect(body).toHaveProperty('error');
+  test('POST /api/register - success @smoke', async () => {
+    const response = await reqresClient.register(
+      API_TEST_DATA.reqres.register.email,
+      API_TEST_DATA.reqres.register.password
+    );
+    expect(response).toHaveProperty('id');
+    expect(response).toHaveProperty('token');
+    expect(typeof response.token).toBe('string');
+    expect(response.token.length).toBeGreaterThan(0);
   });
 
-  test('POST /api/login - success', async ({ request }) => {
-    const response = await request.post('/api/login', {
-      data: {
-        email: 'eve.holt@reqres.in',
-        password: 'cityslicka'
-      }
-    });
-    expect(response.ok()).toBeTruthy();
-    const body = await response.json();
-    expect(body).toHaveProperty('token');
+  test('POST /api/register - failure (missing password) @negative', async () => {
+    await expect(
+      reqresClient.register('eve.holt@reqres.in', '')
+    ).rejects.toThrow(/400/);
   });
 
-  test('POST /api/login - failure (no password)', async ({ request }) => {
-    const response = await request.post('/api/login', {
-      data: {
-        email: process.env.REQRES_LOGIN
-      }
-    });
-    expect(response.status()).toBe(400);
-    const body = await response.json();
-    expect(body).toHaveProperty('error');
+  test('POST /api/register - failure (missing email) @negative', async () => {
+    await expect(
+      reqresClient.register('', 'cityslicka')
+    ).rejects.toThrow(/400/);
+  });
+
+  test('POST /api/login - success @smoke', async () => {
+    const response = await reqresClient.login(
+      API_TEST_DATA.reqres.login.email,
+      API_TEST_DATA.reqres.login.password
+    );
+    expect(response).toHaveProperty('token');
+    expect(typeof response.token).toBe('string');
+    expect(response.token.length).toBeGreaterThan(0);
+  });
+
+  test('POST /api/login - failure (wrong password) @negative', async () => {
+    await expect(
+      reqresClient.login('eve.holt@reqres.in', 'wrongpassword')
+    ).rejects.toThrow(/400/);
+  });
+
+  test('POST /api/login - failure (missing email) @negative', async () => {
+    await expect(
+      reqresClient.login('', 'cityslicka')
+    ).rejects.toThrow(/400/);
+  });
+
+  test('POST /api/login - failure (non-existent user) @negative', async () => {
+    await expect(
+      reqresClient.login('nonexistent@example.com', 'password')
+    ).rejects.toThrow(/400/);
   });
 });

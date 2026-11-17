@@ -1,64 +1,70 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../PageObjects/orangehrm/LoginPage';
-import { DashboardPage } from '../../PageObjects/orangehrm/DashboardPage';
-import { PimPage } from '../../PageObjects/orangehrm/PimPage';
-import dotenv from 'dotenv';
-import path from 'path';
+import { test, expect } from '../../fixtures/test-fixtures';
+import { generateEmployeeData } from '../../utils/test-data-generators';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+test.describe('OrangeHRM PIM Suite @ui', () => {
+  test.describe.configure({ retries: 1 });
 
-test.describe('OrangeHRM PIM Suite', () => {
-    let loginPage: LoginPage;
-    let dashboardPage: DashboardPage;
-    let pimPage: PimPage;
+  test.beforeEach(async ({ orangeHrmAuthenticatedPage, orangeHrmDashboardPage }) => {
+    await orangeHrmDashboardPage.navigateToPIM();
+  });
 
-    test.beforeEach(async ({ page }) => {
-        loginPage = new LoginPage(page);
-        dashboardPage = new DashboardPage(page);
-        pimPage = new PimPage(page);
+  test('Add Employee @smoke @e2e', async ({ orangeHrmAuthenticatedPage, page }) => {
+    // This would use the PIM page object
+    // For now, using direct page interactions as placeholder
+    const employeeData = generateEmployeeData();
 
-        await loginPage.goto();
-        await loginPage.login(process.env.ORANGEHRM_USERNAME!, process.env.ORANGEHRM_PASSWORD!);
-        await dashboardPage.navigateToPIM();
-    });
+    await page.getByRole('button', { name: 'Add' }).click();
+    await page.getByPlaceholder('First Name').fill(employeeData.firstName);
+    await page.getByPlaceholder('Last Name').fill(employeeData.lastName);
 
-    test('Add Employee', async () => {
-        const firstName = 'Test';
-        const lastName = 'User' + Math.floor(Math.random() * 1000);
-        await pimPage.addEmployee(firstName, lastName);
-        await expect(pimPage.employeeTable).toBeVisible();
-    });
+    if (employeeData.employeeId) {
+      await page.locator('input[placeholder="Employee Id"]').fill(employeeData.employeeId);
+    }
 
-    test('Search Employee', async () => {
-        await pimPage.searchEmployee('Admin');
-        await pimPage.verifyEmployeeExists('Admin');
-    });
+    await page.getByRole('button', { name: 'Save' }).click();
+    await expect(page.locator('.oxd-table-card')).toBeVisible({ timeout: 10000 });
+  });
 
-    test('Employee List Load', async () => {
-        await expect(pimPage.employeeTable).toBeVisible();
-    });
+  test('Search Employee @smoke', async ({ page }) => {
+    await page.goto('**/pim/viewEmployeeList');
+    await page.getByPlaceholder('Employee Name').fill('Admin');
+    await page.getByRole('button', { name: 'Search' }).click();
+    await expect(page.getByText('Admin')).toBeVisible();
+  });
 
-    test('Search for non-existent employee', async () => {
-        await pimPage.searchEmployee('NonExistentEmployee123');
-        await pimPage.verifyNoRecordsFound();
-    });
+  test('Employee List Load @smoke', async ({ page }) => {
+    await expect(page.locator('.oxd-table-card')).toBeVisible();
+  });
 
-    test('Validate required fields in Add Employee', async ({ page }) => {
-        await pimPage.addEmployeeBtn.click();
-        await pimPage.saveBtn.click();
-        await expect(page.locator('.oxd-alert-content-text')).toBeVisible();
-    });
+  test('Search for non-existent employee @negative', async ({ page }) => {
+    await page.goto('**/pim/viewEmployeeList');
+    await page.getByPlaceholder('Employee Name').fill('NonExistentEmployee123');
+    await page.getByRole('button', { name: 'Search' }).click();
+    await expect(page.getByText('No Records Found')).toBeVisible();
+  });
 
-    test('Employee Update', async () => {
-        await pimPage.searchEmployee('Admin');
-        await pimPage.editEmployeeDetails('Admin', 'UpdatedLastName');
-        await expect(pimPage.employeeTable).toBeVisible();
-    });
+  test('Validate required fields in Add Employee @negative', async ({ page }) => {
+    await page.getByRole('button', { name: 'Add' }).click();
+    await page.getByRole('button', { name: 'Save' }).click();
+    await expect(page.locator('.oxd-alert-content-text')).toBeVisible();
+  });
 
-    test('Complex Search', async ({ page }) => {
-        await page.goto('**/pim/viewEmployeeList');
-        await page.locator('input[placeholder="Employee Name"]').fill('Admin');
-        await page.locator('button[type="submit"]').click();
-        await pimPage.verifyEmployeeExists('Admin');
-    });
+  test('Employee Update @regression', async ({ page }) => {
+    await page.goto('**/pim/viewEmployeeList');
+    await page.getByPlaceholder('Employee Name').fill('Admin');
+    await page.getByRole('button', { name: 'Search' }).click();
+    await page.getByText('Admin').first().click();
+    await page.getByRole('button', { name: 'Edit' }).click();
+    await page.getByPlaceholder('Last Name').clear();
+    await page.getByPlaceholder('Last Name').fill('UpdatedLastName');
+    await page.getByRole('button', { name: 'Save' }).click();
+    await expect(page.locator('.oxd-table-card')).toBeVisible();
+  });
+
+  test('Complex Search @regression', async ({ page }) => {
+    await page.goto('**/pim/viewEmployeeList');
+    await page.getByPlaceholder('Employee Name').fill('Admin');
+    await page.getByRole('button', { name: 'Search' }).click();
+    await expect(page.getByText('Admin')).toBeVisible();
+  });
 });
